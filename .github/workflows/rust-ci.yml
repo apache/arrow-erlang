@@ -44,7 +44,7 @@ jobs:
           toolchain: "${{ env.RUST_TOOLCHAIN_VERSION }}"
           components: clippy
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: swatinem/rust-cache@v2
         with:
           env-vars: "RUST_TOOLCHAIN_VERSION"
           workspaces: |
@@ -94,7 +94,7 @@ jobs:
           toolchain: "${{ env.RUST_TOOLCHAIN_VERSION }}"
           components: rustfmt
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: swatinem/rust-cache@v2
         with:
           env-vars: "RUST_TOOLCHAIN_VERSION"
           workspaces: |
