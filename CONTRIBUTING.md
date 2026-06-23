@@ -54,7 +54,7 @@ feat!: Reconstruct API
 The Arrow Erlang project uses GitHub as a bug tracker. To report a bug,
 sign in to your GitHub account, navigate to [GitHub
 issues](https://github.com/apache/arrow-erlang/issues) and click on
-**New issue** .
+**New issue**.
 
 Before you create a new bug entry, we recommend you first search among
 existing issues in
