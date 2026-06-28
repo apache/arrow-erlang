@@ -69,7 +69,7 @@ jobs:
           toolchain: "${{ env.RUST_TOOLCHAIN_VERSION }}"
           components: rustfmt
 
-      - uses: swatinem/rust-cache@v2 # v2.9.1
+      - uses: swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
           env-vars: "RUST_TOOLCHAIN_VERSION"
           workspaces: |
@@ -94,7 +94,7 @@ jobs:
           toolchain: "${{ env.RUST_TOOLCHAIN_VERSION }}"
           components: rustfmt
 
-      - uses: swatinem/rust-cache@v2 # v2.9.1
+      - uses: swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
           env-vars: "RUST_TOOLCHAIN_VERSION"
           workspaces: |
