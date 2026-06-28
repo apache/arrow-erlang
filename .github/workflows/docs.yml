@@ -59,7 +59,7 @@ jobs:
             test-native-${{ runner.os }}-${{ env.RUST_TOOLCHAIN_VERSION }}
 
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8
+        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # v1
         with:
           toolchain: "${{ env.RUST_TOOLCHAIN_VERSION }}"
 
