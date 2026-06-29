@@ -128,7 +128,10 @@ jobs:
           name: docs-${{ github.sha }}
           path: docs
       - name: Prepare website
-        run: cp .asf.yaml ./docs/.asf.yaml
+        run: |
+          tar -xf docs/artifact.tar -C docs
+          rm docs/artifact.tar
+          cp .asf.yaml ./docs/.asf.yaml
       - name: Deploy to ASF
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453  # v4.1.0
         with:
