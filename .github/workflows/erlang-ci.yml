@@ -131,6 +131,7 @@ jobs:
 
       - name: Run dialyzer
         run: rebar3 dialyzer
+<<<<<<< HEAD
 
   docbuild_test:
     name: Test Generate the Docs
@@ -174,3 +175,5 @@ jobs:
 
       - name: Generate Docs
         run: rebar3 ex_doc
+=======
+>>>>>>> 3f77acb (Publish docs to arrow.apache.org)
