@@ -37,7 +37,7 @@ jobs:
           - native/arrow_format_nif/Cargo.toml
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # v1
         with:
@@ -62,7 +62,7 @@ jobs:
           - native/arrow_format_nif/Cargo.toml
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # v1
         with:
@@ -87,7 +87,7 @@ jobs:
           - native/arrow_format_nif/Cargo.toml
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # v1
         with:
