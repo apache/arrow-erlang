@@ -106,7 +106,7 @@ jobs:
 
 
   asf_site:
-  # Only deploy on a push to main
+    # Only deploy on a push to main
     if: github.ref_name == 'main' && github.event_name == 'push'
     name: Deploy to arrow.apache.org
     needs: build
