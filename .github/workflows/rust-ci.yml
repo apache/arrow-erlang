@@ -39,12 +39,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: dtolnay/rust-toolchain@master
+      - uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # v1
         with:
           toolchain: "${{ env.RUST_TOOLCHAIN_VERSION }}"
           components: clippy
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
           env-vars: "RUST_TOOLCHAIN_VERSION"
           workspaces: |
@@ -64,12 +64,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: dtolnay/rust-toolchain@master
+      - uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # v1
         with:
           toolchain: "${{ env.RUST_TOOLCHAIN_VERSION }}"
           components: rustfmt
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
           env-vars: "RUST_TOOLCHAIN_VERSION"
           workspaces: |
@@ -89,12 +89,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: dtolnay/rust-toolchain@master
+      - uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # v1
         with:
           toolchain: "${{ env.RUST_TOOLCHAIN_VERSION }}"
           components: rustfmt
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
           env-vars: "RUST_TOOLCHAIN_VERSION"
           workspaces: |
