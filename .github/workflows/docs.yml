@@ -101,6 +101,8 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+        with:
+           artifact_name: docs-${{ github.sha }}
 
 
   asf_site:
