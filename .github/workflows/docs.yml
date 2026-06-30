@@ -82,8 +82,8 @@ jobs:
           path: 'doc'
 
   gh_pages:
-    # Only deploy on a push to main
-    if: github.ref_name == 'main' && github.event_name == 'push'
+    # Only deploy on a push to main or on workflow dispatch
+    if: (github.ref_name == 'main' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
     name: Deploy to GitHub Pages
     needs: build
 
