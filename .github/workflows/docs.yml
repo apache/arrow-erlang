@@ -104,7 +104,7 @@ jobs:
 
   asf_site:
     # Only deploy on a push to main
-    if: github.ref_name == 'main' && github.event_name == 'push'
+    if: github.ref_name == 'main' && github.event_name == 'push' && github.repository == 'apache/arrow-erlang'
     name: Deploy to arrow.apache.org
     needs: build
 
