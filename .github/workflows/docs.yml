@@ -129,14 +129,14 @@ jobs:
           path: docs
       - name: Prepare website
         run: |
-          tar -xf docs/artifact.tar -C docs
-          rm docs/artifact.tar
-          cp .asf.yaml ./docs/.asf.yaml
+          tar -xf docs/artifact.tar -C asf-site
+          rm asf-site/artifact.tar
+          cp .asf.yaml ./asf-site/.asf.yaml
       - name: Deploy to ASF
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453  # v4.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs
+          publish_dir: asf-site
           publish_branch: asf-site
           # Avoid accumulating history of in progress API jobs: https://github.com/apache/arrow-rs/issues/5908
           force_orphan: true
