@@ -130,10 +130,8 @@ jobs:
         with:
           name: docs-${{ github.sha }}
           path: docs
-      - name: Prepare website
-        run: |
-          tar -xf docs/artifact.tar -C asf-site
-          rm asf-site/artifact.tar
+      - name: Decompress artifact
+        run: tar -xf docs/artifact.tar -C asf-site
       - name: Deploy to ASF
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453  # v4.1.0
         with:
