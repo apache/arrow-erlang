@@ -79,10 +79,12 @@ jobs:
           name: docs-${{ github.sha }}
           path: 'doc'
 
-  gh_pages:
-    # Only deploy on a push to main or on workflow dispatch
-    if: (github.ref_name == 'main' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
-    name: Deploy to GitHub Pages
+  deploy_fork:
+    name: Deploy to GitHub Pages on fork
+    if: >-
+      (github.event_name == 'push' ||
+       github.event_name == 'workflow_dispatch') &&
+       github.repository != 'apache/arrow-erlang'
     needs: build
 
     # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
