@@ -120,3 +120,38 @@ Please read our [development
 documentation](https://arrow.apache.org/docs/developers/index.html) or
 look through the [New Contributor's
 Guide](https://arrow.apache.org/docs/developers/guide/index.html).
+
+### Forks
+
+We deploy a preview of the ExDoc documentation of any fork as a part of our
+tests.
+
+On a commit to all branches, the rendered static site will be
+published to GitHub Pages using GitHub Actions. The latest commit is
+only visible because all publications use the same url:
+https://${YOUR_GITHUB_ACCOUNT}.github.io/arrow-erlang/
+
+You need to configure your fork repository to use this feature:
+
+1. Enable GitHub Pages on your fork:
+   1. Open https://github.com/${YOUR_GITHUB_ACCOUNT}/arrow-erlang/settings/pages
+   2. Select "GitHub Actions" as "Source"
+2. Accept publishing GitHub Pages from all branches on your fork:
+   1. Open https://github.com/${YOUR_GITHUB_ACCOUNT}/arrow-erlang/settings/environments
+   2. Select the "github-pages" environment
+   3. Change the default "Deployment branches and tags" rule:
+      1. Press the "Edit" button
+      2. Change the "Name pattern" to `*` from `main` or `gh-pages`
+
+See also the [GitHub Pages
+documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow).
+
+
+FYI: You can also generate the site for https://arrow.apache.org/arrow-erlang/main
+to `doc/` locally by running the following:
+
+
+```shell
+rebar3 ex_doc
+```
+
