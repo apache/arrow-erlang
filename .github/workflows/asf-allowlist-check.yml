@@ -45,10 +45,11 @@ jobs:
       # Check that actions are pinned and on the ASF allowlist.
       # Intentionally unpinned to always use the latest allowlist from the ASF.
       - uses: apache/infrastructure-actions/allowlist-check@main # zizmor: ignore[unpinned-uses]
+
   zizmor:
     name: Zizmor Checks
     runs-on: ubuntu-latest
     steps:
       - uses: zizmorcore/zizmor-action@192e21d79ab29983730a13d1382995c2307fbcaa # v0.5.7
-      with:
-        advanced-security: false
+        with:
+          advanced-security: false
