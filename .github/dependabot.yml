@@ -24,6 +24,8 @@ updates:
     commit-message:
       prefix: "chore: "
     open-pull-requests-limit: 10
+    cooldown:
+      default-days: 7
   - package-ecosystem: "cargo"
     directory: "/native/arrow_format_nif"
     schedule:
@@ -31,3 +33,5 @@ updates:
     commit-message:
       prefix: "chore: "
     open-pull-requests-limit: 10
+    cooldown:
+      default-days: 7
