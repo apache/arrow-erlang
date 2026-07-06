@@ -27,6 +27,9 @@ on:
 env:
   RUST_TOOLCHAIN_VERSION: stable
 
+permissions:
+  contents: read
+
 jobs:
   lint-rust:
     name: Lint Rust with Clippy
