@@ -17,4 +17,4 @@
 
 ErrorDocument 404 /erlang/main/404.html
 
-RedirectMatch permanent ^/erlang/(?!main/)(.*)$ https://arrow.hexdocs.pm/$1
+RedirectMatch permanent ^/erlang/(?!main/?)(.*)$ https://arrow.hexdocs.pm/$1
