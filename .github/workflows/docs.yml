@@ -70,9 +70,6 @@ jobs:
       - name: Generate docs
         run: rebar3 ex_doc
 
-      - name: Copy .asf.yaml
-        run: cp .asf.yaml doc
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
@@ -135,8 +132,11 @@ jobs:
         with:
           name: docs-${{ github.sha }}
           path: docs
-      - name: Decompress artifact
-        run: tar -xf docs/artifact.tar -C asf-site
+      - name: Prepare website
+        run: |
+          tar -xf docs/artifact.tar -C asf-site/main
+          cp .asf.yaml asf-site
+          cp .htaccess asf-site
       - name: Deploy to ASF
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453  # v4.1.0
         with:
