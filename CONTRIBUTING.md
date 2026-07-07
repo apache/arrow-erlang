@@ -147,7 +147,7 @@ See also the [GitHub Pages
 documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow).
 
 
-FYI: You can also generate the site for https://arrow.apache.org/arrow-erlang/main
+FYI: You can also generate the site for https://arrow.apache.org/erlang/main
 to `doc/` locally by running the following:
 
 
