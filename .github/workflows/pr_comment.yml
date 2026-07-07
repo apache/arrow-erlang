@@ -17,6 +17,7 @@
 
 name: PR comment
 
+# zizmor: ignore[dangerous-triggers]
 on:
   pull_request_target:
     types:
