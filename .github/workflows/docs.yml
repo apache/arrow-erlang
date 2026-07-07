@@ -134,6 +134,7 @@ jobs:
           path: docs
       - name: Prepare website
         run: |
+          mkdir -p asf-site/main
           tar -xf docs/artifact.tar -C asf-site/main
           cp .asf.yaml asf-site
           cp .htaccess asf-site
