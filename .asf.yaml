@@ -18,7 +18,7 @@
 # https://github.com/apache/infrastructure-asfyaml
 github:
   description: "Official Erlang implementation of Apache Arrow"
-  homepage: https://arrow.apache.org/erlang/
+  homepage: https://arrow.apache.org/erlang/main/
   labels:
     - apache-arrow
     - erlang

@@ -42,7 +42,7 @@ In addition to an Erlang installation, you will need a Rust installation with
 `cargo`. You can then add the following to your rebar.config:
 
 ``` erlang
-{arrow, {git, "https://github.com/Benjamin-Philip/arrow.git"}}
+{arrow, {git, "https://github.com/apache/arrow-erlang.git"}}
 ```
 
 And compile!
