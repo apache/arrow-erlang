@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: Docs CI
+name: Docs
 on:
   push:
   pull_request:

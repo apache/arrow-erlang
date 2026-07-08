@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: Rust CI
+name: Rust
 on:
   push:
     branches:
@@ -32,7 +32,7 @@ permissions:
 
 jobs:
   lint-rust:
-    name: Lint Rust with Clippy
+    name: Lint with Clippy
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -59,7 +59,7 @@ jobs:
         run: cargo clippy --manifest-path=${{ matrix.manifest }} -- -Dwarnings
 
   fmt-rust:
-    name: Check Rust Formatting with rustfmt
+    name: Check Formatting with rustfmt
     runs-on: ubuntu-latest
     strategy:
       matrix:
