@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: Enhancement Request
+name: Feature Request
 description: Request an enhancement to the project
 type: Feature
 body:
