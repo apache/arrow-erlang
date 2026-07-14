@@ -16,6 +16,9 @@
 % under the License.
 
 -module(arrow_array).
+
+%% TODO Check formatting with erlfmt
+%% erlfmt:ignore
 -moduledoc """
 Provides a record, a behaviour, and functions to work with Apache Arrow Arrays.
 
@@ -160,6 +163,8 @@ data(Array) ->
 %% Array Serialization %%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% TODO Check formatting with erlfmt
+%% erlfmt:ignore
 -doc """ 
 Serializes an array into the Arrow binary form.
 
