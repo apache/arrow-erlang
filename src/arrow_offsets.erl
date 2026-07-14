@@ -66,7 +66,7 @@
     Value :: [arrow_type:native_type()],
     Type :: arrow_type:arrow_longhand_type()
 ) ->
-    Buffer :: #buffer{}.
+    Buffer :: arrow_buffer:buffer().
 new(Values, Type) ->
     new(Values, Type, length(Values)).
 
@@ -76,7 +76,7 @@ new(Values, Type) ->
     Type :: arrow_type:arrow_longhand_type(),
     Length :: pos_integer()
 ) ->
-    Buffer :: #buffer{}.
+    Buffer :: arrow_buffer:buffer().
 new(Values, Type, Len) ->
     Offsets = offsets(Values, [0], 0, Type),
     arrow_buffer:from_erlang(Offsets, {s, 32}, Len + 1).

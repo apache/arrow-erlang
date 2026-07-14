@@ -56,6 +56,11 @@
 
 -include("arrow_buffer.hrl").
 
+-export_type([buffer/0]).
+
+-doc "Represents an Arrow Buffer.".
+-type buffer() :: arrow_buffer:buffer().
+
 %% @doc Creates a new buffer from a list of Erlang values or binaries, given its
 %% type
 %% @end
@@ -63,7 +68,7 @@
     Value :: [arrow_type:native_type()] | binary(),
     Type :: arrow_type:arrow_longhand_type()
 ) ->
-    Buffer :: #buffer{}.
+    Buffer :: arrow_buffer:buffer().
 from_erlang(Data, Type) ->
     Len =
         case Type of
@@ -82,7 +87,7 @@ from_erlang(Data, Type) ->
     Type :: arrow_type:arrow_longhand_type(),
     DataLen :: pos_integer() | undefined
 ) ->
-    Buffer :: #buffer{}.
+    Buffer :: arrow_buffer:buffer().
 from_erlang(Data, Type, DataLen) ->
     Len =
         case Type of
@@ -97,7 +102,7 @@ from_erlang(Data, Type, DataLen) ->
 
 %% @doc Returns an Arrow buffer binary given a buffer.
 %% @end
--spec to_arrow(Buffer :: #buffer{}) -> binary().
+-spec to_arrow(Buffer :: arrow_buffer:buffer()) -> binary().
 to_arrow(Buffer) when is_record(Buffer, buffer) ->
     Type = Buffer#buffer.type,
     Bin =
@@ -114,14 +119,14 @@ to_arrow(_Buffer) ->
 
 %% @doc Returns a list of Erlang values or binaries from a buffer.
 %% @end
--spec to_erlang(Buffer :: #buffer{}) -> [arrow_type:native_type()].
+-spec to_erlang(Buffer :: arrow_buffer:buffer()) -> [arrow_type:native_type()].
 to_erlang(Buffer) when is_record(Buffer, buffer) ->
     Buffer#buffer.data;
 to_erlang(_Buffer) ->
     erlang:error(badarg).
 
 %% @doc Returns the size of the buffer inclusive of padding in bytes.
--spec size(Buffer :: #buffer{}) -> pos_integer().
+-spec size(Buffer :: arrow_buffer:buffer()) -> pos_integer().
 size(Buffer) ->
     Len = Buffer#buffer.length * 8,
     round((Len + arrow_utils:pad_len(Len)) / 8).

@@ -43,9 +43,9 @@ specification:
 | `len`             | `t:pos_integer/0`           | [Length](https://arrow.apache.org/docs/format/Columnar.html#array-lengths)                |
 | `element_len`     | `t:pos_integer/0`           | Length of each element                                                                    |
 | `null_count`      | `t:non_neg_integer/0`       | [Null Count](https://arrow.apache.org/docs/format/Columnar.html#null-count)               |
-| `validity_bitmap` | `arrow_buffer`              | [Validity Bitmap](https://arrow.apache.org/docs/format/Columnar.html#validity-bitmaps)    |
-| `offsets`         | `arrow_buffer`              | [Offsets](https://arrow.apache.org/docs/format/Columnar.html#variable-size-binary-layout) |
-| `data`            | `arrow_buffer`              | Value Buffer                                                                              |
+| `validity_bitmap` | `t:arrow_buffer:buffer/0`   | [Validity Bitmap](https://arrow.apache.org/docs/format/Columnar.html#validity-bitmaps)    |
+| `offsets`         | `t:arrow_buffer:buffer/0`   | [Offsets](https://arrow.apache.org/docs/format/Columnar.html#variable-size-binary-layout) |
+| `data`            | `t:arrow_buffer:buffer/0`   | Value Buffer                                                                              |
 
 
 Certain fields are not required for certain layouts. For example, for the
@@ -95,7 +95,7 @@ Creates a new array of a certain layout, given its value and options from its
 erlang representation.
 """.
 -callback from_erlang(Value :: [arrow_type:native_type()], Opts :: map()) ->
-    Array :: #array{}.
+    Array :: array().
 
 -doc """
 A common way to create a new array, given its layout, value, and options.
@@ -106,7 +106,7 @@ from its erlang representation.
     Value :: [arrow_type:native_type()],
     Opts :: map() | arrow_type:arrow_type()
 ) ->
-    Array :: #array{}.
+    Array :: array().
 from_erlang(Layout, Value, Opts) ->
     case Layout of
         fixed_primitive -> arrow_fixed_primitive_array:from_erlang(Value, Opts);
@@ -120,42 +120,42 @@ from_erlang(Layout, Value, Opts) ->
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 -doc "Returns the layout of an array.".
--spec layout(Array :: #array{}) -> Layout :: layout().
+-spec layout(Array :: array()) -> Layout :: layout().
 layout(Array) ->
     Array#array.layout.
 
 -doc "Returns the type of an array.".
--spec type(Array :: #array{}) -> Type :: arrow_type:arrow_type().
+-spec type(Array :: array()) -> Type :: arrow_type:arrow_type().
 type(Array) ->
     Array#array.type.
 
 -doc "Returns the length of an array.".
--spec len(Array :: #array{}) -> Length :: pos_integer().
+-spec len(Array :: array()) -> Length :: pos_integer().
 len(Array) ->
     Array#array.len.
 
 -doc "Returns the length of an array.".
--spec element_len(Array :: #array{}) -> Length :: pos_integer() | undefined.
+-spec element_len(Array :: array()) -> Length :: pos_integer() | undefined.
 element_len(Array) ->
     Array#array.element_len.
 
 -doc "Returns the null count of an array.".
--spec null_count(Array :: #array{}) -> NullCount :: non_neg_integer().
+-spec null_count(Array :: array()) -> NullCount :: non_neg_integer().
 null_count(Array) ->
     Array#array.null_count.
 
 -doc "Returns the validity bitmap of an array.".
--spec validity_bitmap(Array :: #array{}) -> ValidityBitmap :: #buffer{} | undefined.
+-spec validity_bitmap(Array :: array()) -> ValidityBitmap :: arrow_buffer:buffer() | undefined.
 validity_bitmap(Array) ->
     Array#array.validity_bitmap.
 
 -doc "Returns the offsets of an array.".
--spec offsets(Array :: #array{}) -> Offsets :: #buffer{} | undefined.
+-spec offsets(Array :: array()) -> Offsets :: arrow_buffer:buffer() | undefined.
 offsets(Array) ->
     Array#array.offsets.
 
 -doc "Returns the data of an array.".
--spec data(Array :: #array{}) -> Data :: #buffer{} | #array{} | undefined.
+-spec data(Array :: array()) -> Data :: arrow_buffer:buffer() | array() | undefined.
 data(Array) ->
     Array#array.data.
 
@@ -183,7 +183,7 @@ array.
 Do note that this is just binary form that includes the buffers in an Array,
 and not IPC.
 """.
--spec to_arrow(Array :: #array{}) -> Arrow :: binary().
+-spec to_arrow(Array :: array()) -> Arrow :: binary().
 to_arrow(Array) ->
     Validity = some(validity_bitmap(Array)),
     Offsets = some(offsets(Array)),
@@ -191,7 +191,7 @@ to_arrow(Array) ->
 
     <<Validity/binary, Offsets/binary, Data/binary>>.
 
--spec some(Value :: #array{} | #buffer{} | undefined) -> Binary :: binary().
+-spec some(Value :: array() | arrow_buffer:buffer() | undefined) -> Binary :: binary().
 some(undefined) ->
     <<>>;
 some(Buffer) when is_record(Buffer, buffer) ->

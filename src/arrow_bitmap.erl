@@ -65,7 +65,7 @@
 %% @doc Returns the Validity Bitmap along with the Null Count, of
 %% an Array.
 -spec validity_bitmap(Value :: [arrow_type:native_type()] | list()) ->
-    {Bitmap :: #buffer{}, non_neg_integer()}.
+    {Bitmap :: arrow_buffer:buffer(), non_neg_integer()}.
 validity_bitmap(Value) ->
     case (lists:member(undefined, Value)) orelse (lists:member(nil, Value)) of
         true ->
@@ -78,7 +78,7 @@ validity_bitmap(Value) ->
     Value :: [arrow_type:native_type()],
     Acc :: binary(),
     NullCount :: non_neg_integer()
-) -> {Bitmap :: #buffer{}, NullCount :: non_neg_integer()}.
+) -> {Bitmap :: arrow_buffer:buffer(), NullCount :: non_neg_integer()}.
 bitmap([X1, X2, X3, X4, X5, X6, X7, X8 | Rest], Acc, NullCount) ->
     %% By assigning B8 as X1's validity, we are following LSB numbering.
     B8 = validity(X1),

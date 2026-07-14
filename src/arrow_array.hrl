@@ -23,7 +23,7 @@
     len :: pos_integer(),
     element_len :: pos_integer() | undefined,
     null_count :: non_neg_integer(),
-    validity_bitmap :: #buffer{} | undefined,
-    offsets :: #buffer{} | undefined,
-    data :: #buffer{} | #array{}
+    validity_bitmap :: arrow_buffer:buffer() | undefined,
+    offsets :: arrow_buffer:buffer() | undefined,
+    data :: arrow_buffer:buffer() | #array{}
 }).

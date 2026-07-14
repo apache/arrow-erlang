@@ -115,7 +115,7 @@ array_data(Array, CurOffset) ->
             {Buffers ++ [DataBuffer], NewOffset}
     end.
 
--spec buffer_data(Buffer :: #buffer{}, CurOffset :: non_neg_integer()) ->
+-spec buffer_data(Buffer :: arrow_buffer:buffer(), CurOffset :: non_neg_integer()) ->
     {BufferData :: buffer(), NewOffset :: pos_integer()}.
 buffer_data(Buffer, CurOffset) ->
     {
