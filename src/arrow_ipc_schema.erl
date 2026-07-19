@@ -38,7 +38,7 @@ You can find Schemas in the Arrow spec
 [here](https://arrow.apache.org/docs/format/Columnar.html#schema-message).
 """.
 -export([from_erlang/1]).
--export_type([endianness/0, feature/0]).
+-export_type([endianness/0, feature/0, schema/0]).
 
 -include("arrow_ipc_schema.hrl").
 
@@ -51,9 +51,12 @@ See the [definition](https://github.com/apache/arrow/blob/3456131ab7350bee5d9569
 """.
 -type feature() :: unused | dictionary_replacement | compressed_body.
 
+-doc "Represents a schema".
+-type schema() :: #schema{}.
+
 -doc """
 Creates a Schema given an ordered list of fields.
 """.
--spec from_erlang(Fields :: [#field{}]) -> Schema :: #schema{}.
+-spec from_erlang(Fields :: [arrow_ipc_field:field()]) -> Schema :: schema().
 from_erlang(Fields) ->
     #schema{fields = Fields}.

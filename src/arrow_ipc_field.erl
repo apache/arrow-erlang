@@ -42,14 +42,20 @@ Currently, dictionary encoding and custom metadata are not supported, but
 they have been added for forwards comapatibility.
 """.
 -export([from_erlang/1, from_erlang/2, from_erlang/3]).
+-export_type([field/0]).
 
 -include("arrow_ipc_schema.hrl").
+
+-doc """
+Represents an IPC Field.
+""".
+-type field() :: #field{}.
 
 -doc """
 Creates a field given the type of the column. Assigns the name as
 `undefined`.
 """.
--spec from_erlang(Type :: arrow_ipc_type:ipc_type()) -> Field :: #field{}.
+-spec from_erlang(Type :: arrow_ipc_type:ipc_type()) -> Field :: field().
 from_erlang(Type) ->
     from_erlang(Type, undefined, []).
 
@@ -57,7 +63,7 @@ from_erlang(Type) ->
 Creates a field given the type and name of the column.
 """.
 -spec from_erlang(Type :: arrow_ipc_type:ipc_type(), Name :: string() | undefined) ->
-    Field :: #field{}.
+    Field :: field().
 from_erlang(Type, Name) ->
     from_erlang(Type, Name, []).
 
@@ -65,8 +71,8 @@ from_erlang(Type, Name) ->
 Creates a field given the type, name and children of the column.
 """.
 -spec from_erlang(
-    Type :: arrow_ipc_type:ipc_type(), Name :: string() | undefined, Children :: [#field{}]
+    Type :: arrow_ipc_type:ipc_type(), Name :: string() | undefined, Children :: [field()]
 ) ->
-    Field :: #field{}.
+    Field :: field().
 from_erlang(Type, Name, Children) ->
     #field{name = Name, type = Type, children = Children}.

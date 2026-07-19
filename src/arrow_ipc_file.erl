@@ -29,6 +29,8 @@ all the messages.
 -include("arrow_ipc_message.hrl").
 -include("arrow_ipc_file.hrl").
 
+-type file() :: #file{}.
+
 %%%%%%%%%%%%%%%%%%%
 %% from_erlang/2 %%
 %%%%%%%%%%%%%%%%%%%
@@ -36,7 +38,9 @@ all the messages.
 -doc """
 Creates a file given a schema message and a list of record batch messages.
 """.
--spec from_erlang(Schema :: #message{}, RecordBatches :: [#message{}]) -> #file{}.
+-spec from_erlang(
+    Schema :: arrow_ipc_message:message(), RecordBatches :: [arrow_ipc_message:message()]
+) -> file().
 from_erlang(SchemaMsg, RecordBatches) ->
     SchemaEMF = arrow_ipc_message:to_ipc(SchemaMsg),
     {RecordBatchBlocks, EMFs} = blocks(byte_size(SchemaEMF), RecordBatches, [], []),
@@ -50,7 +54,7 @@ from_erlang(SchemaMsg, RecordBatches) ->
 %% Returns the blocks as wells as the intermediate EMFs used to generate each block.
 -spec blocks(
     Offset :: non_neg_integer(),
-    Messages :: [#message{}],
+    Messages :: [arrow_ipc_message:message()],
     Blocks :: [#block{}],
     EMFs :: [binary()]
 ) -> {Blocks :: [#block{}], EMFs :: [binary()]}.
@@ -72,7 +76,7 @@ blocks(Offset, [H | T], Blocks, EMFs) ->
 -doc """
 Serializes a file into the IPC File Format.
 """.
--spec to_ipc(File :: #file{}) -> SerializedFile :: binary().
+-spec to_ipc(File :: file()) -> SerializedFile :: binary().
 to_ipc(File) ->
     Footer = arrow_format_nif:serialize_footer(File#file.footer),
     Sz = byte_size(Footer),

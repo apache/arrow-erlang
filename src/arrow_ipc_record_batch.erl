@@ -43,18 +43,19 @@ You can find RecordBatches in the Arrow spec
 [here](https://arrow.apache.org/docs/format/Columnar.html#recordbatch-message).
 """.
 -export([from_erlang/1]).
--export_type([field_node/0, buffer/0]).
+-export_type([field_node/0, buffer/0, record_batch/0]).
 
 -include("arrow_ipc_record_batch.hrl").
 -include("arrow_array.hrl").
 
 -type field_node() :: #{length => pos_integer(), null_count => non_neg_integer()}.
 -type buffer() :: #{offset => non_neg_integer(), length => pos_integer()}.
+-type record_batch() :: #record_batch{}.
 
 -doc """
 Creates a RecordBatch given a list of arrays
 """.
--spec from_erlang(Arrays :: [#array{}]) -> RecordBatch :: #record_batch{}.
+-spec from_erlang(Arrays :: [arrow_array:array()]) -> RecordBatch :: record_batch().
 from_erlang(Arrays) ->
     FieldNodes = lists:map(
         fun(X) -> #{length => X#array.len, null_count => X#array.null_count} end, Arrays
@@ -72,7 +73,7 @@ from_erlang(Arrays) ->
     #record_batch{length = Length, nodes = FieldNodes, buffers = lists:reverse(Buffers)}.
 
 %% Returns the buffer data for all the buffers and nested arrays in an array.
--spec array_data(Array :: #array{}, CurOffset :: non_neg_integer()) ->
+-spec array_data(Array :: arrow_array:array(), CurOffset :: non_neg_integer()) ->
     {[buffer()], NewOffset :: non_neg_integer()}.
 array_data(Array, CurOffset) ->
     Bitmap = Array#array.validity_bitmap,

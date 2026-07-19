@@ -46,9 +46,12 @@ of an unsatisfied dependency on flatbuffers, which is required for serializing
 the metadata.
 """.
 -export([from_erlang/1, from_erlang/2, to_ipc/1, to_stream/1, metadata_len/1, body_from_erlang/1]).
--export_type([metadata_version/0, key_value/0]).
+-export_type([message/0, metadata_version/0, key_value/0]).
 
 -include("arrow_ipc_message.hrl").
+
+-doc "Represents a Message.".
+-type message() :: #message{}.
 
 -doc """
 The Arrow version. See the
@@ -67,21 +70,24 @@ for more info:
 -doc """
 Creates a message given a data header.
 """.
--spec from_erlang(Header :: #schema{} | #record_batch{}) -> Message :: #message{}.
+-spec from_erlang(Header :: arrow_ipc_schema:schema() | arrow_ipc_record_batch:record_batch()) ->
+    Message :: message().
 from_erlang(Header) ->
     #message{header = Header, body_length = 0}.
 
 -doc """
 Creates a message given a data header and a body.
 """.
--spec from_erlang(Header :: #schema{} | #record_batch{}, Body :: binary()) -> Message :: #message{}.
+-spec from_erlang(
+    Header :: arrow_ipc_schema:schema() | arrow_ipc_record_batch:record_batch(), Body :: binary()
+) -> Message :: message().
 from_erlang(Header, Body) ->
     #message{header = Header, body = Body, body_length = byte_size(Body)}.
 
 -doc """
 Serializes a message into the Encapsulated Message Format.
 """.
--spec to_ipc(Message :: #message{}) -> EMF :: binary().
+-spec to_ipc(Message :: message()) -> EMF :: binary().
 to_ipc(Message) ->
     %% 0xFFFFFFFF in int32
     Continuation = <<-1:32>>,
@@ -101,7 +107,7 @@ to_ipc(Message) ->
 -doc """
 Serializes a list of messages or EMFs into a Stream.
 """.
--spec to_stream(Messages :: [#message{}] | [binary()]) -> Stream :: binary().
+-spec to_stream(Messages :: [message()] | [binary()]) -> Stream :: binary().
 to_stream([H | _] = Messages) ->
     Msgs =
         if
@@ -139,6 +145,6 @@ Shorthand for:
 <<<<(arrow_array:to_arrow(Array))/binary>> || Array <- Columns>>
 ```
 """.
--spec body_from_erlang(Columns :: [#array{}]) -> Body :: binary().
+-spec body_from_erlang(Columns :: [arrow_array:array()]) -> Body :: binary().
 body_from_erlang(Columns) ->
     <<<<(arrow_array:to_arrow(Array))/binary>> || Array <- Columns>>.
