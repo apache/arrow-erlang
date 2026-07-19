@@ -134,7 +134,7 @@ type(Array) ->
 len(Array) ->
     Array#array.len.
 
--doc "Returns the length of an array.".
+-doc "Returns the length of an element in an array.".
 -spec element_len(Array :: array()) -> Length :: pos_integer() | undefined.
 element_len(Array) ->
     Array#array.element_len.
