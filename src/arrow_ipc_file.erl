@@ -15,16 +15,15 @@
 % specific language governing permissions and limitations
 % under the License.
 
-%% @doc Provides records and functions to deal with the IPC File.
-%%
-%% The IPC File[1] is an extension of the IPC Stream[2] that supports random
-%% access with the help of a footer which contains the offsets of all the
-%% messages.
-%%
-%% [1]: https://arrow.apache.org/docs/format/Columnar.html#ipc-file-format
-%% [2]: https://arrow.apache.org/docs/format/Columnar.html#ipc-streaming-format
-%% @end
 -module(arrow_ipc_file).
+-moduledoc """
+Provides records and functions to deal with the IPC File. The [IPC
+File](https://arrow.apache.org/docs/format/Columnar.html#ipc-file-format) is an
+extension of the [IPC Stream](
+https://arrow.apache.org/docs/format/Columnar.html#ipc-streaming-format) that
+supports random access with the help of a footer which contains the offsets of
+all the messages.
+""".
 -export([from_erlang/2, to_ipc/1]).
 
 -include("arrow_ipc_message.hrl").
@@ -34,7 +33,9 @@
 %% from_erlang/2 %%
 %%%%%%%%%%%%%%%%%%%
 
-%% @doc Creates a file given a schema message and a list of record batch messages.
+-doc """
+Creates a file given a schema message and a list of record batch messages.
+""".
 -spec from_erlang(Schema :: #message{}, RecordBatches :: [#message{}]) -> #file{}.
 from_erlang(SchemaMsg, RecordBatches) ->
     SchemaEMF = arrow_ipc_message:to_ipc(SchemaMsg),
@@ -68,7 +69,9 @@ blocks(Offset, [H | T], Blocks, EMFs) ->
 %% to_ipc/1 %%
 %%%%%%%%%%%%%%
 
-%% @doc Serializes a file into the IPC File Format
+-doc """
+Serializes a file into the IPC File Format.
+""".
 -spec to_ipc(File :: #file{}) -> SerializedFile :: binary().
 to_ipc(File) ->
     Footer = arrow_format_nif:serialize_footer(File#file.footer),

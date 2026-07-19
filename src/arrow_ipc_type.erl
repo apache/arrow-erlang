@@ -15,20 +15,17 @@
 % specific language governing permissions and limitations
 % under the License.
 
-%% @doc Provides types and functions to work with IPC types.
-%%
-%% This module provides functions and types to produce the types in IPC Schema
-%% definitions[1]. These types are generated according to these[2] definitions.
-%% The types have been represented in the form `{TypeName, Metadata}', where
-%% `TypeName' is the name of the type and is an atom, and `Metadata' is a map of
-%% all the metadata associated with it. In case a type has no metadata
-%% associated with it, it is represented as just `TypeName'
-%%
-%% [1]:https://github.com/apache/arrow/blob/main/format/Schema.fbs
-%%
-%% [2]: https://github.com/apache/arrow/blob/main/format/Schema.fbs#L82-L430
-%% @end
 -module(arrow_ipc_type).
+-moduledoc """
+Provides types and functions to work with IPC types. This module provides
+functions and types to produce the types in IPC Schema
+[definitions](https://github.com/apache/arrow/blob/main/format/Schema.fbs).
+These types are generated according to `Type` union in the schema. The types
+have been represented in the form `{TypeName, Metadata}`, where `TypeName` is
+the name of the type and is an atom, and `Metadata` is a map of all the metadata
+associated with it. In case a type has no metadata associated with it, it is
+represented as just `TypeName`
+""".
 -export([from_erlang/1]).
 -export_type([
     ipc_type/0,
@@ -90,7 +87,9 @@
 %% from_erlang/1 %%
 %%%%%%%%%%%%%%%%%%%
 
-%% @doc Returns the IPC Type for an `#array{}'.
+-doc """
+Returns the IPC Type for an `t:arrow_array:array()`.
+""".
 -spec from_erlang(Array :: arrow_array:array()) -> Type :: ipc_type().
 from_erlang(Array) ->
     case Array#array.layout of
