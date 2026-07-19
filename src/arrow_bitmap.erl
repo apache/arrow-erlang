@@ -15,55 +15,47 @@
 % specific language governing permissions and limitations
 % under the License.
 
-%% @doc Validity Bitmap implementation for `arrow'.
-%%
-%% Defines a function `validity_bitmap/1' to return the Validity Bitmap[1] along
-%% with the Null Count[2], of an Array.
-%%
-%% An important thing to consider about our implementation of the Null Count is
-%% that we need to support both `undefined' and `nil' as null values as they are
-%% the conventions for null values in Erlang, and Elixir respectively.
-%%
-%% There are 5 important characteristics to remember about the validity bitmap:
-%%
-%% <ol>
-%%  <li>
-%%      A null value is represented by a 0 bit, and a non null value by a 1 bit.
-%%  </li>
-%%  <li>
-%%      Every 8 elements's validities are batched into a byte, which are then
-%%      reversed as Arrow uses least-significant bit (LSB) numbering (more in
-%%      attached reference).
-%%  </li>
-%%  <li>
-%%      If a "batch" consists of less than 8 elements, its validity needs to be
-%%      padded by 0 bits so that it can make a byte.
-%%  </li>
-%%  <li>
-%%      Each byte is stored in a slot of a Buffer (see docs for
-%%      `arrow_buffer'). This buffer with the validities of each batch of 8
-%%      elements make up what is called the Validity Bitmap.
-%%  </li>
-%%  <li>
-%%      If the Null Count is 0, we can allocate the Validity Bitmap as a NULL
-%%      pointer (which in Erlang's case is `undefined').
-%%  </li>
-%% </ol>
-%% [1]: [https://arrow.apache.org/docs/format/Columnar.html#validity-bitmaps]
-%%
-%% [2]: [https://arrow.apache.org/docs/format/Columnar.html#null-count]
-%% @end
 -module(arrow_bitmap).
--export([validity_bitmap/1]).
+-moduledoc """
+Validity Bitmap implementation for `arrow`.
 
--include("arrow_buffer.hrl").
+Defines a function `validity_bitmap/1` to return the [Validity
+Bitmap](https://arrow.apache.org/docs/format/Columnar.html#validity-bitmaps)
+along with the [Null
+Count](https://arrow.apache.org/docs/format/Columnar.html#null-count), of an
+Array.
+
+An important thing to consider about our implementation of the Null Count is
+that we need to support both `undefined` and `nil` as null values as they are
+the conventions for null values in Erlang, and Elixir respectively.
+
+There are 5 important characteristics to remember about the validity bitmap:
+
+1. A null value is represented by a 0 bit, and a non null value by a 1 bit.
+
+2. Every 8 elements's validities are batched into a byte, which are then
+   reversed as Arrow uses least-significant bit (LSB) numbering (more in
+   attached reference).
+ 
+3. If a "batch" consists of less than 8 elements, its validity needs to be
+   padded by 0 bits so that it can make a byte.
+ 
+4. Each byte is stored in a slot of a Buffer (see docs for `arrow_buffer`). This
+   buffer with the validities of each batch of 8 elements make up what is called
+   the Validity Bitmap.
+
+5. If the Null Count is 0, we can allocate the Validity Bitmap as a NULL pointer
+   (which in Erlang's case is `undefined`).
+""".
+-export([validity_bitmap/1]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Validity Bitmap & Null Count %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% @doc Returns the Validity Bitmap along with the Null Count, of
-%% an Array.
+-doc """
+Returns the Validity Bitmap along with the Null Count, of an Array.
+""".
 -spec validity_bitmap(Value :: [arrow_type:native_type()] | list()) ->
     {Bitmap :: arrow_buffer:buffer(), non_neg_integer()}.
 validity_bitmap(Value) ->
