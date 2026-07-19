@@ -15,40 +15,30 @@
 % specific language governing permissions and limitations
 % under the License.
 
-%% @doc Provides support for Arrow's Fixed-Size Primitive Layout.
-%%
-%% The Primitive Layout[1] uses the following metadata in the `arrow_array':
-%%
-%% <ol>
-%%  <li>
-%%      `layout', of type {@link atom()}, and a constant value of `fixed_primitive'.
-%%  </li>
-%%  <li>
-%%       `type', of type `t:arrow_type:arrow_primitive_type()', which
-%%       represents the Logical Type of the Array.
-%% </li>
-%%  <li>`len', of type {@link pos_integer()}, which represents the Array's Length.</li>
-%%  <li>
-%%      `null_count', of type {@link non_neg_integer()}, which represents the Array's
-%%      Null Count, or the number of undefined values in the Array.
-%%  </li>
-%%  <li>
-%%      `validity_bitmap', which is a buffer (`arrow_buffer') or the atom
-%%       `undefined', which represents the Array's Validity Bitmap[2].
-%%  </li>
-%%  <li>
-%%      `data', which is a buffer (`arrow_buffer'), which represents the Array's Value Buffer.
-%%  </li>
-%% </ol>
-%%
-%% The `offsets' field will be allocated as `undefined'. Same goes for the
-%% `validity_bitmap' field in the case of a 0 `null_count'.
-%%
-%% [1]: [https://arrow.apache.org/docs/format/Columnar.html#fixed-size-primitive-layout]
-%%
-%% [2]: [https://arrow.apache.org/docs/format/Columnar.html#validity-bitmaps]
-%% @end
 -module(arrow_fixed_primitive_array).
+-moduledoc """
+Provides support for Arrow's Fixed-Size Primitive Layout. The [Primitive
+Layout](https://arrow.apache.org/docs/format/Columnar.html#fixed-size-primitive-layout)
+uses the following metadata in the `arrow_array`:
+
+1.  `layout`, of type `t:atom/0`, and a constant value of
+    `fixed_primitive`.
+2.  `type`, of type `t:arrow_type:arrow_primitive_type/0`, which
+    represents the Logical Type of the Array.
+3.  `len`, of type `t:pos_integer/0`, which represents the Array's
+    Length.
+4.  `null_count`, of type `t:non_neg_integer/0`, which represents
+    the Array's Null Count, or the number of undefined values in the
+    Array.
+5.  `validity_bitmap`, which is a buffer (`arrow_buffer`) or the
+    atom `undefined`, which represents the Array's [Validity
+    Bitmap](https://arrow.apache.org/docs/format/Columnar.html#validity-bitmaps).
+6.  `data`, which is a buffer (`arrow_buffer`), which represents the
+    Array's Value Buffer.
+
+The `offsets` field will be allocated as `undefined`. Same goes for the
+`validity_bitmap` field in the case of a 0 `null_count`.
+""".
 -behaviour(arrow_array).
 
 -export([from_erlang/2]).
@@ -59,16 +49,17 @@
 %% Array Creation %%
 %%%%%%%%%%%%%%%%%%%%
 
-%% @doc Creates a new primitive array, given its value and type from its erlang
-%% representation.
-%%
-%% Accepts a map with the type, or the type directly.
-%% @end
+-doc """
+Creates a new primitive array, given its value and type from its erlang
+representation.
+
+Accepts a map with the type, or the type directly.
+""".
 -spec from_erlang(
     Value :: [arrow_type:native_type()],
     Type :: map() | arrow_type:arrow_primitive_type()
 ) ->
-    Array :: #array{}.
+    Array :: arrow_array:array().
 from_erlang(Value, Opts) when is_map(Opts) ->
     case maps:get(type, Opts, undefined) of
         undefined ->

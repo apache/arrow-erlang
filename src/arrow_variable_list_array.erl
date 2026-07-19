@@ -15,30 +15,29 @@
 % specific language governing permissions and limitations
 % under the License.
 
-%% @doc Provides support for Arrow's Fixed-Size List Layout.
-%%
-%% This module provides support for the Fixed-Size List Layout[1], which is an
-%% layout that supports storing a list of lists of a specific length and
-%% nesting.
-%%
-%% == Invalid Input ==
-%%
-%% It is important that care is taken when passing input values to this module.
-%% For performance reasons, the input is not validated. The function crashes on
-%% nesting that is inconsitent: a. with the type, b. between elements. The
-%% behaviour on invalid input <strong>CANNOT BE GUARANTEED</strong>. Therefore,
-%% one must be careful to not to <strong>CRASH THE PROCESS</strong> or worse
-%% still, <strong>PRODUCE INVALID OUTPUT</strong>.
-%%
-%% Any input must follow the following rules:
-%%
-%% <ol>
-%%  <li>The nesting of each element must be consistent with the type</li>
-%%  <li>The nesting of each element must be consistent with each other</li>
-%% </ol>
-%%
-%% [1]: https://arrow.apache.org/docs/format/Columnar.html#variable-size-list-layout
 -module(arrow_variable_list_array).
+-moduledoc """
+Provides support for Arrow's Fixed-Size List Layout.
+
+This module provides support for the [Fixed-Size List
+Layout](https://arrow.apache.org/docs/format/Columnar.html#variable-size-list-layout),
+which is an layout that supports storing a list of lists of a specific length
+and nesting.
+
+## Invalid Input
+
+It is important that care is taken when passing input values to this
+module. For performance reasons, the input is not validated. The
+function crashes on nesting that is inconsitent: a. with the type, b.
+between elements. The behaviour on invalid input **CANNOT BE
+GUARANTEED**. Therefore, one must be careful to not to **CRASH THE
+PROCESS** or worse still, **PRODUCE INVALID OUTPUT**.
+
+Any input must follow the following rules:
+
+1.  The nesting of each element must be consistent with the type
+2.  The nesting of each element must be consistent with each other
+""".
 
 -behaviour(arrow_array).
 
@@ -47,7 +46,7 @@
 -include("arrow_array.hrl").
 
 -spec from_erlang(Values :: list(), Type :: map() | arrow_type:arrow_type()) ->
-    Array :: #array{}.
+    Array :: arrow_array:array().
 from_erlang(Values, Opts) when is_map(Opts) ->
     case maps:get(type, Opts, undefined) of
         undefined ->

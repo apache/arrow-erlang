@@ -15,26 +15,34 @@
 % specific language governing permissions and limitations
 % under the License.
 
-%% @doc Provides support for Arrow's Variable-Sized Binary Layout.
-%%
-%% The Variable-Sized Binary Layout[1] provides support for storing binaries of
-%% varying length in a way similar to the primitive layout, i.e. in a 1
-%% Dimensional Array.
 -module(arrow_variable_binary_array).
+-moduledoc """
+Provides support for Arrow's Variable-Sized Binary Layout.
+
+The [Variable-Sized Binary
+Layout](https://arrow.apache.org/docs/format/Columnar.html#variable-size-binary-layout)
+provides support for storing binaries of varying length in a way similar to the
+primitive layout, i.e. in a 1 Dimensional Array.
+""".
 -behaviour(arrow_array).
 
 -export([from_erlang/1, from_erlang/2]).
 
 -include("arrow_array.hrl").
 
-%% @doc Creates a Variable-Sized Binary Array given the values and options in the form of
-%% a map, from its erlang representation.
--spec from_erlang(Values :: [arrow_type:native_type()], Opts :: map()) -> Array :: #array{}.
+-doc """
+Creates a Variable-Sized Binary Array given the values and options in the form of
+a map, from its erlang representation.
+""".
+-spec from_erlang(Values :: [arrow_type:native_type()], Opts :: map()) ->
+    Array :: arrow_array:array().
 from_erlang(Values, _Opts) ->
     from_erlang(Values).
 
-%% @doc Creates a Variable-Sized Binary Array given the values
--spec from_erlang(Values :: [arrow_type:native_type()]) -> Array :: #array{}.
+-doc """
+Creates a Variable-Sized Binary Array given the values
+""".
+-spec from_erlang(Values :: [arrow_type:native_type()]) -> Array :: arrow_array:array().
 from_erlang(Values) ->
     Len = length(Values),
     {Bitmap, NullCount} = arrow_bitmap:validity_bitmap(Values),
