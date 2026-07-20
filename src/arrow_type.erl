@@ -62,11 +62,11 @@ Here you can find the name of each table:
 |------------------|-------|--------------|
 | Booleans         | N/A   | `bool`       |
 | Signed Integer   | `s`   | `s64`        |
-| Unsigned Integer | `u `  | `u16 `       |
-| Float            | `f `  | `f32 `       |
-| Binaries         | N/A   | `bin `       |
+| Unsigned Integer | `u`   | `u16`        |
+| Float            | `f`   | `f32`        |
+| Binaries         | N/A   | `bin`        |
 
-Types that are shorthand are under the `t:arrow_shorthand_type()` and
+Types that are shorthand are under the `t:arrow_shorthand_type/0` and
 `arrow_short_*()` types.
 
 ### Longhand Syntax
@@ -76,10 +76,10 @@ tuple is `{Name, Size}`. Thus, `Int 8` would be represented as `{s, 8}`. Do
 note that in the case or Booleans and Binaries their `Size` is `undefined`, as
 the have variable or undefined size.
 
-Types that are longhand are under the `t:arrow_longhand_type()` and
+Types that are longhand are under the `t:arrow_longhand_type/0` and
 `arrow_long_*()` types.
 
-### Type
+### Nested Types
 
 A Nested Type is any data structure that supports nesting. This can include
 Lists, FixedLists, Maps, Structs and more, but is curently limited to
@@ -98,7 +98,7 @@ each element in an array. A list of `Int8` is 2 dimensional, and a list of
 ## Native Type
 
 A Native Type is any Erlang Datatype that can be serialized by `arrow`,
-and is represented by the type `t:native_type()`. It currently only includes
+and is represented by the type `t:native_type/0`. It currently only includes
 values that are primitive in nature such as booleans, integers, floats,
 binaries, and additionally the atoms `undefined` and `nil` to represent a
 `NULL` value.
