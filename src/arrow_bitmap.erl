@@ -56,6 +56,9 @@ There are 5 important characteristics to remember about the validity bitmap:
 -doc """
 Returns the Validity Bitmap along with the Null Count, of an Array.
 """.
+%% TODO: Bitmap should be arrow_buffer:buffer() | undefined
+%% Investigate why Dialyzer isn't raising, and potentially
+%% run eqWAlizer via ELP on the CI.
 -spec validity_bitmap(Value :: [arrow_type:native_type()] | list()) ->
     {Bitmap :: arrow_buffer:buffer(), non_neg_integer()}.
 validity_bitmap(Value) ->
