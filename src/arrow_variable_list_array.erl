@@ -17,9 +17,9 @@
 
 -module(arrow_variable_list_array).
 -moduledoc """
-Provides support for Arrow's Fixed-Size List Layout.
+Provides support for Arrow's Variable-Size List Layout.
 
-This module provides support for the [Fixed-Size List
+This module provides support for the [Variable-Size List
 Layout](https://arrow.apache.org/docs/format/Columnar.html#variable-size-list-layout),
 which is an layout that supports storing a list of lists of a specific length
 and nesting.
