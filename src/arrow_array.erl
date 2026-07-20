@@ -175,7 +175,7 @@ order:
 2. `offsets`
 3. `data`
 
-In case an array doesn't have any of the following buffers, it is ommitted.
+In case an array doesn't have any of the following buffers, it is omitted.
 (e.g. validity in arrays with a null count of 0, offsets in fixed primitive
 arrays). In the case of a nested array, `data` will be serialized form of nested
 array.

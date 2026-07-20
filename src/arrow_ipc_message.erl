@@ -36,7 +36,7 @@ to represent a message. Metadata such as:
     or a binary (in the case of Record Batch).
 
 Currently, changing the version and custom metadata are not supported, but they
-have been added for forwards comapatibility.
+have been added for forwards compatibility.
 
 This module also provides the `to_ipc/1` function which serializes the message
 into the [Encapsulated Message

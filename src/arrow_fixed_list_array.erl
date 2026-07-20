@@ -21,14 +21,14 @@ Provides support for Arrow's Fixed-Size List Layout.
 
 This module provides support for the [Fixed-Size List
 Layout](https://arrow.apache.org/docs/format/Columnar.html#fixed-size-list-layout),
-which is an layout that supports storing a list of lists of a specific length
-and nesting.
+which is a layout that supports storing a list of lists of a specific length and
+nesting.
 
 ## Invalid Input
 
 It is important that care is taken when passing input values to this module. For
 performance reasons, the input is not validated. The function crashes on nesting
-that is inconsitent: a. with the type, b. between elements. The lists are
+that is inconsistent: either with the type, or between elements. The lists are
 checked to have the same length as each other at the top level, but not for
 deeper levels. The behaviour of the module on invalid input **CANNOT BE
 GUARANTEED**. Therefore, one must be careful to not to **CRASH THE PROCESS** or

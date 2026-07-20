@@ -28,7 +28,7 @@ and nesting.
 
 It is important that care is taken when passing input values to this
 module. For performance reasons, the input is not validated. The
-function crashes on nesting that is inconsitent: a. with the type, b.
+function crashes on nesting that is inconsistent: a. with the type, b.
 between elements. The behaviour on invalid input **CANNOT BE
 GUARANTEED**. Therefore, one must be careful to not to **CRASH THE
 PROCESS** or worse still, **PRODUCE INVALID OUTPUT**.

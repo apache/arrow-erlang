@@ -28,8 +28,8 @@ support for generating offsets.
 
 There are couple of things to remember about offsets:
 
-Firstly, each element in the offsets coresponds to the distance in bytes of the
-coresponding element in the values from the beginning of the buffer.
+Firstly, each element in the offsets corresponds to the distance in bytes of the
+corresponding element in the values from the beginning of the buffer.
 
 I.E., distance of `values[j]` from beginning of the buffer = `offsets[j]`.
 

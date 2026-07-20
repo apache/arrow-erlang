@@ -20,10 +20,10 @@
 Provides representation for as well as functions for working with Arrow
 specific datatypes.
 
-This module provides a longhand (a 2 tuple) as well as a shorthand (an atom)
-represenations for representing a primitive types. Additionally it represents
-Nested Types (i.e. Lists) as well as Native Types (i.e. Erlang Native Types
-that are supported by this package).
+This module provides longhand (a 2 tuple) as well as shorthand (an atom)
+representations for representing primitive types. Additionally it represents
+Nested Types (i.e. Lists) as well as Native Types (i.e. Erlang Native Types that
+are supported by this package).
 
 Generally, when we say an array A has type X, we mean that each element in A
 has type X. Thus, an array of type of `Int8` would look like `[1, 2, 3]`, but

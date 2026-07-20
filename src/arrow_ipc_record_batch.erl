@@ -17,9 +17,11 @@
 
 -module(arrow_ipc_record_batch).
 -moduledoc """
-Provides a record and functions to deal with RecordBatches
+Provides a record and functions to deal with RecordBatches.
+
+
 A [RecordBatch](https://github.com/apache/arrow/blob/16328f0ccc73b7df665b4a18feb6adf26b7aa0e2/format/Message.fbs#L81-L102) represents a list of equal length arrays and their
-coresponding buffers. This module provides a record and a function to manage
+corresponding buffers. This module provides a record and a function to manage
 all the metadata required to represent a RecordBatch. Metadata such as:
 
 1.  `length`: The number of rows or records. In other words, the
@@ -31,7 +33,7 @@ all the metadata required to represent a RecordBatch. Metadata such as:
     array.
 
 4.  `compression`: The compression applied on the body of the Record
-    Batch. Can either by `undefined` (i.e. no compression), `zstd` for
+    Batch. Can either be `undefined` (i.e. no compression), `zstd` for
     [Zstandard](https://facebook.github.io/zstd/), or `lz4_frame` for [LZ4
     Frame](https://android.googlesource.com/platform/external/lz4/+/HEAD/doc/lz4_Frame_format.md).
     Defaults to `undefined`.

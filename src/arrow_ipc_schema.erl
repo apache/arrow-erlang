@@ -17,8 +17,9 @@
 
 -module(arrow_ipc_schema).
 -moduledoc """
-Provides a record and functions to deal with Schemas A
-[Schema](https://github.com/apache/arrow/blob/3456131ab7350bee5d9569ffd63d3f0ee713991c/format/Schema.fbs#L514-L530)[1]
+Provides a record and functions to deal with Schemas.
+
+A [Schema](https://github.com/apache/arrow/blob/3456131ab7350bee5d9569ffd63d3f0ee713991c/format/Schema.fbs#L514-L530)
 represents a table, or a list of arrays of equal length. This module provides a
 record and a function to manage all the metadata required to represent a schema.
 Metadata such as:
@@ -32,7 +33,7 @@ Metadata such as:
     present in other implementations of Arrow.
 
 Currently, big endianness, custom metadata and features are not supported, but
-they have been added for forwards comapatibility.
+they have been added for forwards compatibility.
 
 You can find Schemas in the Arrow spec
 [here](https://arrow.apache.org/docs/format/Columnar.html#schema-message).

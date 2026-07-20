@@ -22,7 +22,7 @@
 -moduledoc """
 Buffer implementation for `arrow`.
 
-This module adds suppport for buffers, or Contiguous Memory Regions. There are
+This module adds support for buffers, or Contiguous Memory Regions. There are
 multiple things to know about
 [buffers](https://arrow.apache.org/docs/format/Glossary.html#term-buffer):
 
@@ -73,7 +73,7 @@ from_erlang(Data, Type) ->
 
 -doc """
 Creates a new buffer from a list of Erlang values or binaries, given its
-and length
+type and length
 """.
 -spec from_erlang(
     Data :: [arrow_type:native_type()] | binary(),
