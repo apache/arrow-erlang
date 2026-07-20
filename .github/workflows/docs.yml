@@ -22,9 +22,6 @@ on:
 
   workflow_dispatch:
 
-env:
-  RUST_TOOLCHAIN_VERSION: stable
-
 jobs:
   build:
     name: Build Docs
@@ -37,14 +34,11 @@ jobs:
           persist-credentials: false
 
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30 # stable
-        with:
-          toolchain: "${{ env.RUST_TOOLCHAIN_VERSION }}"
+        run: cd ./native/arrow_format_nif/ && rustup toolchain install
 
       - name: Cache Rust packages
         uses: swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
-          env-vars: "RUST_TOOLCHAIN_VERSION"
           workspaces: |
             native/arrow_format_nif
 
