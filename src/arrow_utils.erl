@@ -15,8 +15,8 @@
 % specific language governing permissions and limitations
 % under the License.
 
-%% @private Utils module
 -module(arrow_utils).
+-moduledoc false.
 -export([nesting/1, flatten/1, flatten/3, pad_len/1, pad_len/2]).
 
 %% Finds the nesting level of deep list
