@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="arrow v0.1.0">
+
+
+    <title>Quick Run-Through Guide — arrow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-erlang-DQDXQC7W.css" />
+
+    <script defer src="dist/sidebar_items-DDBC4286.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="https://github.com/apache/arrow-erlang" class="sidebar-projectName" translate="no">
+arrow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-livemd" id="main" data-type="extras">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of arrow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>Quick run-through</h1>
+
+
+      <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/guides/quick-run-through.livemd#L1" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+  </div>
+
+    <div class="livebook-badge-container">
+      <a href="#" class="livebook-badge">
+        <img src="https://livebook.dev/badge/v1/blue.svg" alt="Run in Livebook" width="150" />
+      </a>
+    </div>
+
+
+<pre><code class="makeup elixir" translate="no"><span class="nc">Mix</span><span class="o">.</span><span class="n">install</span><span class="p" data-group-id="7429264539-1">(</span><span class="p" data-group-id="7429264539-2">[</span><span class="w">
+  </span><span class="p" data-group-id="7429264539-3">{</span><span class="ss">:arrow</span><span class="p">,</span><span class="w"> </span><span class="ss">git</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://github.com/Benjamin-Philip/arrow.git&quot;</span><span class="p" data-group-id="7429264539-3">}</span><span class="w">
+</span><span class="p" data-group-id="7429264539-2">]</span><span class="p" data-group-id="7429264539-1">)</span></code></pre><h2 id="introduction" class="section-heading"><a href="#introduction" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Introduction</span></h2><p>Serializing Erlang into Arrow typically follows the following sequence of
+events:</p><ol><li>Creating a <a href="https://arrow.apache.org/docs/format/Columnar.html#schema-message">Schema
+Message</a>
+with the schema of the data</li><li>Creating Arrow Arrays for each column in the schema.</li><li>Combining the columns of each batch or table into a <a href="https://arrow.apache.org/docs/format/Columnar.html#recordbatch-message">RecordBatch
+Message</a></li><li>Combining the Schema and all the RecordBatches into an <a href="https://arrow.apache.org/docs/format/Columnar.html#ipc-streaming-format">IPC
+Stream</a>
+or an <a href="https://arrow.apache.org/docs/format/Columnar.html#ipc-file-format">IPC
+File</a></li></ol><p>Technically, to use the Arrow Columnar Format <em>itself</em> you only need to do
+step 2. The other steps are in order to use <a href="https://arrow.apache.org/docs/format/Columnar.html#serialization-and-interprocess-communication-ipc">Arrow
+IPC</a>
+which is an abstraction over the Arrow Columnar Format. IPC specifies a format
+to organize multiple Arrow Arrays, and is the standard choice when you do not
+have your own custom format detailing so.</p><p>For the purposes of illustration, let use assume that we have to export the
+annual marks of a school to Arrow.</p><h2 id="creating-a-schema" class="section-heading"><a href="#creating-a-schema" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Creating a Schema</span></h2><p>The marksheet of each class has 4 columns:</p><ol><li>id, which is the Roll no.</li><li>name, which is the first name of the student</li><li>age, which is the age of the student</li><li>marks, which is a list of all the marks of the student</li></ol><p>Ideally the marks should've been split into columns for each subject, but we are
+using a list to show how to manage nested types. We can pretend that the school
+administration is stupid or something.</p><p>First, we must declare a field for each column:</p><pre><code class="makeup erlang" translate="no"><span class="n">IdField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_field</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="2165807401-1">(</span><span class="p" data-group-id="2165807401-2">{</span><span class="ss">int</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2165807401-3">#{</span><span class="ss">bit_width</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="ss">is_signed</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">true</span><span class="p" data-group-id="2165807401-3">}</span><span class="p" data-group-id="2165807401-2">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p" data-group-id="2165807401-1">)</span><span class="p">,</span><span class="w">
+</span><span class="n">NameField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_field</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="2165807401-4">(</span><span class="ss">large_binary</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p" data-group-id="2165807401-4">)</span><span class="p">,</span><span class="w">
+</span><span class="n">AgeField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_field</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="2165807401-5">(</span><span class="p" data-group-id="2165807401-6">{</span><span class="ss">int</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2165807401-7">#{</span><span class="ss">bit_width</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="ss">is_signed</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="2165807401-7">}</span><span class="p" data-group-id="2165807401-6">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;age&quot;</span><span class="p" data-group-id="2165807401-5">)</span><span class="p">,</span><span class="w">
+</span><span class="n">AnnualMarksField</span><span class="w"> </span><span class="o">=</span><span class="w"> 
+    </span><span class="nc">arrow_ipc_field</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="2165807401-8">(</span><span class="w">
+        </span><span class="p" data-group-id="2165807401-9">{</span><span class="ss">fixed_size_list</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2165807401-10">#{</span><span class="ss">list_size</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="2165807401-10">}</span><span class="p" data-group-id="2165807401-9">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;annual_marks&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2165807401-11">[</span><span class="w">
+            </span><span class="nc">arrow_ipc_field</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="2165807401-12">(</span><span class="w">
+                </span><span class="p" data-group-id="2165807401-13">{</span><span class="ss">int</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2165807401-14">#{</span><span class="ss">bit_width</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="ss">is_signed</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="2165807401-14">}</span><span class="p" data-group-id="2165807401-13">}</span><span class="w">
+            </span><span class="p" data-group-id="2165807401-12">)</span><span class="w">
+        </span><span class="p" data-group-id="2165807401-11">]</span><span class="w">
+    </span><span class="p" data-group-id="2165807401-8">)</span><span class="p">.</span></code></pre><p>As you may have noticed, the parameters for declaring a field is the field type,
+followed by the field name. Each type may have extra metadata associated with
+it, such as the int. In the case of a nested datatype, we must also include a
+list of the fields that are nested.</p><p>We then must take those fields and combine them into a schema:</p><pre><code class="makeup erlang" translate="no"><span class="n">Schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_schema</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="6826869314-1">(</span><span class="p" data-group-id="6826869314-2">[</span><span class="n">IdField</span><span class="p">,</span><span class="w"> </span><span class="n">NameField</span><span class="p">,</span><span class="w"> </span><span class="n">AgeField</span><span class="p">,</span><span class="w"> </span><span class="n">AnnualMarksField</span><span class="p" data-group-id="6826869314-2">]</span><span class="p" data-group-id="6826869314-1">)</span><span class="p">.</span></code></pre><p>And that schema into a message:</p><pre><code class="makeup erlang" translate="no"><span class="n">SchemaMsg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="6952915823-1">(</span><span class="n">Schema</span><span class="p" data-group-id="6952915823-1">)</span><span class="p">.</span></code></pre><h2 id="creating-arrow-arrays" class="section-heading"><a href="#creating-arrow-arrays" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Creating Arrow Arrays</span></h2><p>Now that we've got a schema, it is time to create the data for that schema.
+Let's assume that there are 3 classes, Class1, Class2, and Class3. We must
+create the data for each class separately:</p><p>Here's Class1:</p><pre><code class="makeup erlang" translate="no"><span class="n">Class1Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="8603024659-1">(</span><span class="ss">fixed_primitive</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-2">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p" data-group-id="8603024659-2">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-3">{</span><span class="ss">s</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="8603024659-3">}</span><span class="p" data-group-id="8603024659-1">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class1Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="8603024659-4">(</span><span class="w">
+        </span><span class="ss">variable_binary</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-5">[</span><span class="p" data-group-id="8603024659-6">&lt;&lt;</span><span class="s">&quot;alice&quot;</span><span class="p" data-group-id="8603024659-6">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-7">&lt;&lt;</span><span class="s">&quot;bob&quot;</span><span class="p" data-group-id="8603024659-7">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-8">&lt;&lt;</span><span class="s">&quot;charlie&quot;</span><span class="p" data-group-id="8603024659-8">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p" data-group-id="8603024659-5">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-9">{</span><span class="ss">bin</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p" data-group-id="8603024659-9">}</span><span class="w">
+    </span><span class="p" data-group-id="8603024659-4">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class1Age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="8603024659-10">(</span><span class="ss">fixed_primitive</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-11">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p" data-group-id="8603024659-11">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-12">{</span><span class="ss">s</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="8603024659-12">}</span><span class="p" data-group-id="8603024659-10">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class1AnnualMarks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="8603024659-13">(</span><span class="w">
+        </span><span class="ss">fixed_list</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-14">[</span><span class="p" data-group-id="8603024659-15">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">97</span><span class="p">,</span><span class="w"> </span><span class="mi">98</span><span class="p" data-group-id="8603024659-15">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-16">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p" data-group-id="8603024659-16">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-17">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">98</span><span class="p">,</span><span class="w"> </span><span class="mi">95</span><span class="p" data-group-id="8603024659-17">]</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p" data-group-id="8603024659-14">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8603024659-18">{</span><span class="ss">s</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="8603024659-18">}</span><span class="w">
+    </span><span class="p" data-group-id="8603024659-13">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class1Columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8603024659-19">[</span><span class="n">Class1Id</span><span class="p">,</span><span class="w"> </span><span class="n">Class1Name</span><span class="p">,</span><span class="w"> </span><span class="n">Class1Age</span><span class="p">,</span><span class="w"> </span><span class="n">Class1AnnualMarks</span><span class="p" data-group-id="8603024659-19">]</span><span class="p">.</span></code></pre><p>Class2:</p><pre><code class="makeup erlang" translate="no"><span class="n">Class2Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="5030738258-1">(</span><span class="ss">fixed_primitive</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-2">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p" data-group-id="5030738258-2">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-3">{</span><span class="ss">s</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="5030738258-3">}</span><span class="p" data-group-id="5030738258-1">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class2Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="5030738258-4">(</span><span class="w">
+        </span><span class="ss">variable_binary</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-5">[</span><span class="p" data-group-id="5030738258-6">&lt;&lt;</span><span class="s">&quot;anne&quot;</span><span class="o">/</span><span class="ss">utf8</span><span class="o">-</span><span class="ss">little</span><span class="p" data-group-id="5030738258-6">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-7">&lt;&lt;</span><span class="s">&quot;benoît&quot;</span><span class="o">/</span><span class="ss">utf8</span><span class="o">-</span><span class="ss">little</span><span class="p" data-group-id="5030738258-7">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-8">&lt;&lt;</span><span class="s">&quot;clément&quot;</span><span class="o">/</span><span class="ss">utf8</span><span class="o">-</span><span class="ss">little</span><span class="p" data-group-id="5030738258-8">&gt;&gt;</span><span class="p" data-group-id="5030738258-5">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-9">{</span><span class="ss">bin</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p" data-group-id="5030738258-9">}</span><span class="w">
+    </span><span class="p" data-group-id="5030738258-4">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class2Age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="5030738258-10">(</span><span class="ss">fixed_primitive</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-11">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p" data-group-id="5030738258-11">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-12">{</span><span class="ss">s</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="5030738258-12">}</span><span class="p" data-group-id="5030738258-10">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class2AnnualMarks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="5030738258-13">(</span><span class="w">
+        </span><span class="ss">fixed_list</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-14">[</span><span class="p" data-group-id="5030738258-15">[</span><span class="mi">90</span><span class="p">,</span><span class="w"> </span><span class="mi">87</span><span class="p">,</span><span class="w"> </span><span class="mi">75</span><span class="p" data-group-id="5030738258-15">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-16">[</span><span class="mi">85</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p" data-group-id="5030738258-16">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-17">[</span><span class="mi">75</span><span class="p">,</span><span class="w"> </span><span class="mi">88</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p" data-group-id="5030738258-17">]</span><span class="p" data-group-id="5030738258-14">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5030738258-18">{</span><span class="ss">s</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="5030738258-18">}</span><span class="w">
+    </span><span class="p" data-group-id="5030738258-13">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class2Columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5030738258-19">[</span><span class="n">Class2Id</span><span class="p">,</span><span class="w"> </span><span class="n">Class2Name</span><span class="p">,</span><span class="w"> </span><span class="n">Class2Age</span><span class="p">,</span><span class="w"> </span><span class="n">Class2AnnualMarks</span><span class="p" data-group-id="5030738258-19">]</span><span class="p">.</span></code></pre><p>Class3:</p><pre><code class="makeup erlang" translate="no"><span class="n">Class3Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="3954646949-1">(</span><span class="ss">fixed_primitive</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-2">[</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="3954646949-2">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-3">{</span><span class="ss">s</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="3954646949-3">}</span><span class="p" data-group-id="3954646949-1">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class3Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="3954646949-4">(</span><span class="w">
+        </span><span class="ss">variable_binary</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-5">[</span><span class="p" data-group-id="3954646949-6">&lt;&lt;</span><span class="s">&quot;anjali&quot;</span><span class="p" data-group-id="3954646949-6">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-7">&lt;&lt;</span><span class="s">&quot;biju&quot;</span><span class="p" data-group-id="3954646949-7">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-8">&lt;&lt;</span><span class="s">&quot;chandra&quot;</span><span class="p" data-group-id="3954646949-8">&gt;&gt;</span><span class="p" data-group-id="3954646949-5">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-9">{</span><span class="ss">bin</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p" data-group-id="3954646949-9">}</span><span class="w">
+    </span><span class="p" data-group-id="3954646949-4">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class3Age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="3954646949-10">(</span><span class="ss">fixed_primitive</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-11">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p" data-group-id="3954646949-11">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-12">{</span><span class="ss">s</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="3954646949-12">}</span><span class="p" data-group-id="3954646949-10">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class3AnnualMarks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="3954646949-13">(</span><span class="w">
+        </span><span class="ss">fixed_list</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-14">[</span><span class="p" data-group-id="3954646949-15">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">98</span><span class="p" data-group-id="3954646949-15">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-16">[</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p" data-group-id="3954646949-16">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-17">[</span><span class="mi">99</span><span class="p">,</span><span class="w"> </span><span class="mi">98</span><span class="p">,</span><span class="w"> </span><span class="mi">97</span><span class="p" data-group-id="3954646949-17">]</span><span class="p" data-group-id="3954646949-14">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3954646949-18">{</span><span class="ss">s</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p" data-group-id="3954646949-18">}</span><span class="w">
+    </span><span class="p" data-group-id="3954646949-13">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class3Columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3954646949-19">[</span><span class="n">Class3Id</span><span class="p">,</span><span class="w"> </span><span class="n">Class3Name</span><span class="p">,</span><span class="w"> </span><span class="n">Class3Age</span><span class="p">,</span><span class="w"> </span><span class="n">Class3AnnualMarks</span><span class="p" data-group-id="3954646949-19">]</span><span class="p">.</span></code></pre><h2 id="combining-data-into-a-recordbatch" class="section-heading"><a href="#combining-data-into-a-recordbatch" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Combining Data into a RecordBatch</span></h2><p>RecordBatches are used to model different data with the same schema. In this
+case marks from different classes. Another example would marks of the same class
+throughout different years. The columns that make up such a table can be
+combined like so:</p><pre><code class="makeup erlang" translate="no"><span class="n">Class1RecordBatch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_record_batch</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="0909053554-1">(</span><span class="n">Class1Columns</span><span class="p" data-group-id="0909053554-1">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class2RecordBatch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_record_batch</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="0909053554-2">(</span><span class="n">Class2Columns</span><span class="p" data-group-id="0909053554-2">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class3RecordBatch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_record_batch</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="0909053554-3">(</span><span class="n">Class3Columns</span><span class="p" data-group-id="0909053554-3">)</span><span class="p">.</span></code></pre><p>Each of these RecordBatches need a body:</p><pre><code class="makeup erlang" translate="no"><span class="n">Class1Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">body_from_erlang</span><span class="p" data-group-id="4568588406-1">(</span><span class="n">Class1Columns</span><span class="p" data-group-id="4568588406-1">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class2Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">body_from_erlang</span><span class="p" data-group-id="4568588406-2">(</span><span class="n">Class2Columns</span><span class="p" data-group-id="4568588406-2">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class3Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">body_from_erlang</span><span class="p" data-group-id="4568588406-3">(</span><span class="n">Class3Columns</span><span class="p" data-group-id="4568588406-3">)</span><span class="p">.</span></code></pre><p>Which can then be combined into a message:</p><pre><code class="makeup erlang" translate="no"><span class="n">Class1Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="4924818188-1">(</span><span class="n">Class1RecordBatch</span><span class="p">,</span><span class="w"> </span><span class="n">Class1Body</span><span class="p" data-group-id="4924818188-1">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class2Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="4924818188-2">(</span><span class="n">Class2RecordBatch</span><span class="p">,</span><span class="w"> </span><span class="n">Class3Body</span><span class="p" data-group-id="4924818188-2">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class3Msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="4924818188-3">(</span><span class="n">Class3RecordBatch</span><span class="p">,</span><span class="w"> </span><span class="n">Class3Body</span><span class="p" data-group-id="4924818188-3">)</span><span class="p">.</span></code></pre><p>If we wanted to, we could serialize these messages into an <a href="https://arrow.apache.org/docs/format/Columnar.html#encapsulated-message-format">Encapsulated message</a>:</p><pre><code class="makeup erlang" translate="no"><span class="n">Class1EMF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">to_ipc</span><span class="p" data-group-id="6022401258-1">(</span><span class="n">Class1Msg</span><span class="p" data-group-id="6022401258-1">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class2EMF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">to_ipc</span><span class="p" data-group-id="6022401258-2">(</span><span class="n">Class2Msg</span><span class="p" data-group-id="6022401258-2">)</span><span class="p">,</span><span class="w">
+</span><span class="n">Class3EMF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">to_ipc</span><span class="p" data-group-id="6022401258-3">(</span><span class="n">Class3Msg</span><span class="p" data-group-id="6022401258-3">)</span><span class="p">.</span></code></pre><p>Typically, you wouldn't directly use an encapsulated message but a stream or a file instead.</p><h2 id="combining-messages-into-streams-and-files" class="section-heading"><a href="#combining-messages-into-streams-and-files" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Combining Messages into Streams and Files</span></h2><p>Now that we have a schema and some record batches, we can combine them into a
+stream and a file. The difference between a stream and a file is thin: a file is
+a superset of the stream which supports random access and is meant to be saved
+to a file.</p><!-- livebook:{"break_markdown":true} --><p>We can create a stream like this:</p><pre><code class="makeup erlang" translate="no"><span class="nc">arrow_ipc_message</span><span class="p">:</span><span class="nf">to_stream</span><span class="p" data-group-id="6359936879-1">(</span><span class="p" data-group-id="6359936879-2">[</span><span class="n">SchemaMsg</span><span class="p">,</span><span class="w"> </span><span class="n">Class1Msg</span><span class="p">,</span><span class="w"> </span><span class="n">Class2Msg</span><span class="p">,</span><span class="w"> </span><span class="n">Class3Msg</span><span class="p" data-group-id="6359936879-2">]</span><span class="p" data-group-id="6359936879-1">)</span><span class="p">.</span></code></pre><p>Or a file like this:</p><pre><code class="makeup erlang" translate="no"><span class="n">ErlFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_file</span><span class="p">:</span><span class="nf">from_erlang</span><span class="p" data-group-id="3064964275-1">(</span><span class="n">SchemaMsg</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3064964275-2">[</span><span class="n">Class1Msg</span><span class="p">,</span><span class="w"> </span><span class="n">Class2Msg</span><span class="p">,</span><span class="w"> </span><span class="n">Class3Msg</span><span class="p" data-group-id="3064964275-2">]</span><span class="p" data-group-id="3064964275-1">)</span><span class="p">,</span><span class="w">
+</span><span class="n">File</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">arrow_ipc_file</span><span class="p">:</span><span class="nf">to_ipc</span><span class="p" data-group-id="3064964275-3">(</span><span class="n">ErlFile</span><span class="p" data-group-id="3064964275-3">)</span><span class="p">.</span></code></pre><p>We could then save that binary into a file:</p><pre><code class="makeup erlang" translate="no"><span class="nc">file</span><span class="p">:</span><span class="nf">write_file</span><span class="p" data-group-id="6535294014-1">(</span><span class="s">&quot;/tmp/annual_marks.feather&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">File</span><span class="p" data-group-id="6535294014-1">)</span><span class="p">.</span></code></pre>
+
+</div>
+
+<div class="bottom-actions" id="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="license.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+License
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+  </div>
+</div>
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/arrow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/arrow/0.1.0">Hex Preview</a>
+
+              (<a href="https://preview.hex.pm/preview/arrow/0.1.0/show/guides/quick-run-through.livemd">current file</a>)
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="arrow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

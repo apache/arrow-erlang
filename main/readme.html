@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="arrow v0.1.0">
+
+
+    <title>Overview — arrow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-erlang-DQDXQC7W.css" />
+
+    <script defer src="dist/sidebar_items-DDBC4286.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="https://github.com/apache/arrow-erlang" class="sidebar-projectName" translate="no">
+arrow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-extra" id="main" data-type="extras">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of arrow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>arrow-erlang</h1>
+
+
+      <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/README.md#L1" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+  </div>
+
+
+<p>Erlang implementation of the <a href="https://arrow.apache.org/">Apache Arrow</a> in-memory
+columnar format.</p><p>As of right now, <code class="inline">arrow-erlang</code> only provides serialization (write) of Erlang
+data structures into to Arrow. Support for deserialization (read) will be added
+soon.</p><p>We provide support for the <a href="https://arrow.apache.org/docs/format/Columnar.html#physical-memory-layout">Apache Arrow Columnar
+Format</a>
+and the <a href="https://arrow.apache.org/docs/format/Columnar.html#serialization-and-interprocess-communication-ipc">Apache Arrow IPC
+Format</a>.
+Support for <a href="https://arrow.apache.org/docs/format/Flight.html">Flight RPC</a>,
+<a href="https://arrow.apache.org/docs/format/FlightSql.html">Flight SQL</a>, as well
+conversion of Arrow into other formats like <a href="https://parquet.apache.org/">Apache
+Parquet</a>, <a href="https://avro.apache.org/">Apache Avro</a>,
+CSV and JSON is out of the scope of the project.</p><h2 id="build" class="section-heading"><a href="#build" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Build</span></h2><p>In addition to an Erlang installation, you will need a Rust installation with
+<code class="inline">cargo</code>. You can then add the following to your rebar.config:</p><pre><code class="makeup erlang" translate="no"><span class="p" data-group-id="6677004767-1">{</span><span class="ss">arrow</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6677004767-2">{</span><span class="ss">git</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;https://github.com/apache/arrow-erlang.git&quot;</span><span class="p" data-group-id="6677004767-2">}</span><span class="p" data-group-id="6677004767-1">}</span></code></pre><p>And compile!</p><pre><code class="makeup shell" translate="no"><span class="gp unselectable">$ </span><span class="">rebar3 compile
+</span></code></pre><h2 id="format-support" class="section-heading"><a href="#format-support" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Format Support</span></h2><p>This implementation is still a work in progress. As mentioned earlier, we do not
+have read functionality as of right now, only write.</p><p>We support the following primitive data types:</p><ul><li>Int 8/16/32/64</li><li>UInt 8/16/32/64</li><li>Float 32/64</li><li>Fixed Size Binary</li><li>Binary</li><li>Large Binary</li></ul><p>and the following nested data types:</p><ul><li>Fixed Size List</li><li>List</li><li>Large List</li></ul><p>support for the other data types (both primitive and nested) will be added soon.</p><h2 id="ipc-format-support" class="section-heading"><a href="#ipc-format-support" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">IPC Format Support</span></h2><p>Currently we support all the 3 &quot;formats&quot;:</p><ul><li>Encapsulated Message Format</li><li>Stream Format</li><li>File Format</li></ul><p>and the following message types:</p><ul><li>Schema</li><li>RecordBatch</li></ul><p>Support for the following will be added shortly:</p><ul><li>Buffer compression</li><li>Endianness conversion</li><li>Custom schema metadata</li></ul><p>Support for the following will be added post v0.1.0:</p><ul><li>Dictionaries</li><li>Replacement dictionaries</li><li>Delta dictionaries</li><li>Tensors</li><li>Sparse Tensors</li></ul>
+
+</div>
+
+<div class="bottom-actions" id="bottom-actions">
+  <div class="bottom-actions-item">
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="license.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+License
+        </span>
+      </a>
+
+  </div>
+</div>
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/arrow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/arrow/0.1.0">Hex Preview</a>
+
+              (<a href="https://preview.hex.pm/preview/arrow/0.1.0/show/README.md">current file</a>)
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="arrow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

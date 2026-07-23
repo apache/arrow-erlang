@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="arrow v0.1.0">
+
+
+    <title>arrow_array — arrow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-erlang-DQDXQC7W.css" />
+
+    <script defer src="dist/sidebar_items-DDBC4286.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="https://github.com/apache/arrow-erlang" class="sidebar-projectName" translate="no">
+arrow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-behaviour" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of arrow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">arrow_array</span> <small>behaviour</small>
+      <small class="app-vsn" translate="no">(arrow v0.1.0)</small>
+
+    </h1>
+
+      <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L18" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Provides a record, a behaviour, and functions to work with Apache Arrow Arrays.</p><p>This module as mentioned, provides conveniences for working with Apache Arrow
+<a href="https://arrow.apache.org/docs/format/Glossary.html#term-array">Arrays</a> of
+different
+<a href="https://arrow.apache.org/docs/format/Glossary.html#term-physical-layout">Layouts</a>.
+Firstly, it provides a record to represent all the Layout. Secondly, it provides
+a behaviour for different layouts to adhere to common functionality. Lastly, it
+provides functions to work with Arrays in a common manner.</p><h1>The Structure of an Array</h1><p><code class="inline">arrow</code>'s implementation of an Array has the following fields in its record
+definition, each corresponding to a field in the Arrow Columnar Format
+specification:</p><table><thead><tr><th style="text-align: left;">Field</th><th style="text-align: left;">Type</th><th style="text-align: left;">Representing</th></tr></thead><tbody><tr><td style="text-align: left;"><code class="inline">layout</code></td><td style="text-align: left;"><a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:atom/0"><code class="inline">atom/0</code></a></td><td style="text-align: left;">Layout</td></tr><tr><td style="text-align: left;"><code class="inline">type</code></td><td style="text-align: left;"><a href="arrow_type.html#t:arrow_type/0"><code class="inline">arrow_type:arrow_type/0</code></a></td><td style="text-align: left;"><a href="https://arrow.apache.org/docs/format/Glossary.html#term-type">Logical Type</a></td></tr><tr><td style="text-align: left;"><code class="inline">len</code></td><td style="text-align: left;"><a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pos_integer/0"><code class="inline">pos_integer/0</code></a></td><td style="text-align: left;"><a href="https://arrow.apache.org/docs/format/Columnar.html#array-lengths">Length</a></td></tr><tr><td style="text-align: left;"><code class="inline">element_len</code></td><td style="text-align: left;"><a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pos_integer/0"><code class="inline">pos_integer/0</code></a></td><td style="text-align: left;">Length of each element</td></tr><tr><td style="text-align: left;"><code class="inline">null_count</code></td><td style="text-align: left;"><a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:non_neg_integer/0"><code class="inline">non_neg_integer/0</code></a></td><td style="text-align: left;"><a href="https://arrow.apache.org/docs/format/Columnar.html#null-count">Null Count</a></td></tr><tr><td style="text-align: left;"><code class="inline">validity_bitmap</code></td><td style="text-align: left;"><a href="arrow_buffer.html#t:buffer/0"><code class="inline">arrow_buffer:buffer/0</code></a></td><td style="text-align: left;"><a href="https://arrow.apache.org/docs/format/Columnar.html#validity-bitmaps">Validity Bitmap</a></td></tr><tr><td style="text-align: left;"><code class="inline">offsets</code></td><td style="text-align: left;"><a href="arrow_buffer.html#t:buffer/0"><code class="inline">arrow_buffer:buffer/0</code></a></td><td style="text-align: left;"><a href="https://arrow.apache.org/docs/format/Columnar.html#variable-size-binary-layout">Offsets</a></td></tr><tr><td style="text-align: left;"><code class="inline">data</code></td><td style="text-align: left;"><a href="arrow_buffer.html#t:buffer/0"><code class="inline">arrow_buffer:buffer/0</code></a></td><td style="text-align: left;">Value Buffer</td></tr></tbody></table><p>Certain fields are not required for certain layouts. For example, for the
+Fixed-Sized Primitive Layout, the offsets field is not required, in which case
+it is assigned as <code class="inline">undefined</code>. Similarly, the <code class="inline">validity_bitmap</code> is not required
+if there are no null values, in which case it is also assigned as <code class="inline">undefined</code>.</p><h1>The Behaviour of an Array</h1><p>As of right now, a layout needs to implement the <a href="#c:from_erlang/2"><code class="inline">from_erlang/2</code></a> callback.
+This is then used in the <a href="#from_erlang/3"><code class="inline">from_erlang/3</code></a> function to create new arrays.</p><h1>Functions for working with Arrays</h1><p>As of right now, only functions to access the various fields, to create
+new arrays, and to serialize arrays to arrow exist.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:array/0" data-no-tooltip="" translate="no">array()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Represents an Array.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:layout/0" data-no-tooltip="" translate="no">layout()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Represents the Layout of an Array.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-callbacks summary">
+  <h2>
+    <a href="#callbacks">Callbacks</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#c:from_erlang/2" data-no-tooltip="" translate="no">from_erlang(Value, Opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a new array of a certain layout, given its value and options from its
+erlang representation.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#data/1" data-no-tooltip="" translate="no">data(Array)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the data of an array.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#element_len/1" data-no-tooltip="" translate="no">element_len(Array)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the length of an element in an array.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#from_erlang/3" data-no-tooltip="" translate="no">from_erlang(Layout, Value, Opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>A common way to create a new array, given its layout, value, and options.
+from its erlang representation.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#layout/1" data-no-tooltip="" translate="no">layout(Array)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the layout of an array.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#len/1" data-no-tooltip="" translate="no">len(Array)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the length of an array.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#null_count/1" data-no-tooltip="" translate="no">null_count(Array)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the null count of an array.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#offsets/1" data-no-tooltip="" translate="no">offsets(Array)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the offsets of an array.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#to_arrow/1" data-no-tooltip="" translate="no">to_arrow(Array)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Serializes an array into the Arrow binary form.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#type/1" data-no-tooltip="" translate="no">type(Array)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the type of an array.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validity_bitmap/1" data-no-tooltip="" translate="no">validity_bitmap(Array)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the validity bitmap of an array.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:array/0">
+
+  <div class="detail-header">
+    <a href="#t:array/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">array()</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L84" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> array() ::
+          #array{layout :: <a href="arrow_array.html#t:layout/0">arrow_array:layout</a>(),
+                 type :: <a href="arrow_type.html#t:arrow_longhand_type/0">arrow_type:arrow_longhand_type</a>() | <a href="arrow_type.html#t:arrow_nested_type/0">arrow_type:arrow_nested_type</a>(),
+                 len :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pos_integer/0">pos_integer</a>(),
+                 element_len :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pos_integer/0">pos_integer</a>() | undefined,
+                 null_count :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:non_neg_integer/0">non_neg_integer</a>(),
+                 validity_bitmap :: <a href="arrow_buffer.html#t:buffer/0">arrow_buffer:buffer</a>() | undefined,
+                 offsets :: <a href="arrow_buffer.html#t:buffer/0">arrow_buffer:buffer</a>() | undefined,
+                 data :: <a href="arrow_buffer.html#t:buffer/0">arrow_buffer:buffer</a>() | #array{}}.</pre>
+
+      </div>
+
+<p>Represents an Array.</p>
+  </section>
+</section>
+<section class="detail" id="t:layout/0">
+
+  <div class="detail-header">
+    <a href="#t:layout/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">layout()</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L87" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> layout() :: fixed_primitive | variable_binary | fixed_list | variable_list.</pre>
+
+      </div>
+
+<p>Represents the Layout of an Array.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="callbacks" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#callbacks">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Callbacks</span>
+    </h1>
+    <div class="callbacks-list">
+<section class="detail" id="c:from_erlang/2">
+
+  <div class="detail-header">
+    <a href="#c:from_erlang/2" class="detail-link" data-no-tooltip="" aria-label="Link to this callback">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">from_erlang(Value, Opts)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L97" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-callback</span> from_erlang(Value :: [<a href="arrow_type.html#t:native_type/0">arrow_type:native_type</a>()], Opts :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> Array :: <a href="#t:array/0">array</a>().</pre>
+
+      </div>
+
+<p>Creates a new array of a certain layout, given its value and options from its
+erlang representation.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="data/1">
+
+  <div class="detail-header">
+    <a href="#data/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">data(Array)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L159" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> data(Array :: <a href="#t:array/0">array</a>()) -> Data :: <a href="arrow_buffer.html#t:buffer/0">arrow_buffer:buffer</a>() | <a href="#t:array/0">array</a>() | undefined.</pre>
+
+      </div>
+
+<p>Returns the data of an array.</p>
+  </section>
+</section>
+<section class="detail" id="element_len/1">
+
+  <div class="detail-header">
+    <a href="#element_len/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">element_len(Array)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L139" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> element_len(Array :: <a href="#t:array/0">array</a>()) -> Length :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pos_integer/0">pos_integer</a>() | undefined.</pre>
+
+      </div>
+
+<p>Returns the length of an element in an array.</p>
+  </section>
+</section>
+<section class="detail" id="from_erlang/3">
+
+  <div class="detail-header">
+    <a href="#from_erlang/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">from_erlang(Layout, Value, Opts)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L110" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> from_erlang(Layout :: <a href="#t:layout/0">layout</a>(),
+                  Value :: [<a href="arrow_type.html#t:native_type/0">arrow_type:native_type</a>()],
+                  Opts :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>() | <a href="arrow_type.html#t:arrow_type/0">arrow_type:arrow_type</a>()) ->
+                     Array :: <a href="#t:array/0">array</a>().</pre>
+
+      </div>
+
+<p>A common way to create a new array, given its layout, value, and options.
+from its erlang representation.</p>
+  </section>
+</section>
+<section class="detail" id="layout/1">
+
+  <div class="detail-header">
+    <a href="#layout/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">layout(Array)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L124" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> layout(Array :: <a href="#t:array/0">array</a>()) -> Layout :: <a href="#t:layout/0">layout</a>().</pre>
+
+      </div>
+
+<p>Returns the layout of an array.</p>
+  </section>
+</section>
+<section class="detail" id="len/1">
+
+  <div class="detail-header">
+    <a href="#len/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">len(Array)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L134" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> len(Array :: <a href="#t:array/0">array</a>()) -> Length :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pos_integer/0">pos_integer</a>().</pre>
+
+      </div>
+
+<p>Returns the length of an array.</p>
+  </section>
+</section>
+<section class="detail" id="null_count/1">
+
+  <div class="detail-header">
+    <a href="#null_count/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">null_count(Array)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L144" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> null_count(Array :: <a href="#t:array/0">array</a>()) -> NullCount :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:non_neg_integer/0">non_neg_integer</a>().</pre>
+
+      </div>
+
+<p>Returns the null count of an array.</p>
+  </section>
+</section>
+<section class="detail" id="offsets/1">
+
+  <div class="detail-header">
+    <a href="#offsets/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">offsets(Array)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L154" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> offsets(Array :: <a href="#t:array/0">array</a>()) -> Offsets :: <a href="arrow_buffer.html#t:buffer/0">arrow_buffer:buffer</a>() | undefined.</pre>
+
+      </div>
+
+<p>Returns the offsets of an array.</p>
+  </section>
+</section>
+<section class="detail" id="to_arrow/1">
+
+  <div class="detail-header">
+    <a href="#to_arrow/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">to_arrow(Array)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L187" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> to_arrow(Array :: <a href="#t:array/0">array</a>()) -> Arrow :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Serializes an array into the Arrow binary form.</p><p>Serializes the buffers of an Array and concatenates them in the following
+order:</p><ol><li><code class="inline">validity</code></li><li><code class="inline">offsets</code></li><li><code class="inline">data</code></li></ol><p>In case an array doesn't have any of the following buffers, it is omitted.
+(e.g. validity in arrays with a null count of 0, offsets in fixed primitive
+arrays). In the case of a nested array, <code class="inline">data</code> will be serialized form of nested
+array.</p><p>Do note that this is just binary form that includes the buffers in an Array,
+and not IPC.</p>
+  </section>
+</section>
+<section class="detail" id="type/1">
+
+  <div class="detail-header">
+    <a href="#type/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">type(Array)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L129" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> type(Array :: <a href="#t:array/0">array</a>()) -> Type :: <a href="arrow_type.html#t:arrow_type/0">arrow_type:arrow_type</a>().</pre>
+
+      </div>
+
+<p>Returns the type of an array.</p>
+  </section>
+</section>
+<section class="detail" id="validity_bitmap/1">
+
+  <div class="detail-header">
+    <a href="#validity_bitmap/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">validity_bitmap(Array)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_array.erl#L149" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> validity_bitmap(Array :: <a href="#t:array/0">array</a>()) -> ValidityBitmap :: <a href="arrow_buffer.html#t:buffer/0">arrow_buffer:buffer</a>() | undefined.</pre>
+
+      </div>
+
+<p>Returns the validity bitmap of an array.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/arrow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/arrow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="arrow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

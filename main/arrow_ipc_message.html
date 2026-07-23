@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.38.2">
+    <meta name="project" content="arrow v0.1.0">
+
+
+    <title>arrow_ipc_message — arrow v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-erlang-DQDXQC7W.css" />
+
+    <script defer src="dist/sidebar_items-DDBC4286.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-DPJLHKSM.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="https://github.com/apache/arrow-erlang" class="sidebar-projectName" translate="no">
+arrow
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of arrow</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search" tabindex="-1">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">arrow_ipc_message</span> 
+      <small class="app-vsn" translate="no">(arrow v0.1.0)</small>
+
+    </h1>
+
+      <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_ipc_message.erl#L18" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>Provides a record and functions to deal with the Encapsulated Message
+Format.</p><p>A Message is a serialized form of a
+<a href="https://arrow.apache.org/docs/format/Columnar.html#schema-message">Schema</a> or a
+<a href="https://arrow.apache.org/docs/format/Columnar.html#recordbatch-message">RecordBatch</a>
+(which may be required to read a serialized array) along with some metadata.
+This module provides a record and a function to manage all the metadata required
+to represent a message. Metadata such as:</p><ol><li> <code class="inline">version</code>: The Apache Arrow Format Version. One of <code class="inline">v1..v5</code>.
+Defaults to v5.</li><li> <code class="inline">header</code>: The metadata of the Schema or RecordBatch</li><li> <code class="inline">body_length</code>: The length of the body in bytes</li><li> <code class="inline">custom_metadata</code>: A list of custom metadata in key-value format</li><li> <code class="inline">body</code>: The actual body. Can be undefined (in the case of Schema)
+or a binary (in the case of Record Batch).</li></ol><p>Currently, changing the version and custom metadata are not supported, but they
+have been added for forwards compatibility.</p><p>This module also provides the <a href="#to_ipc/1"><code class="inline">to_ipc/1</code></a> function which serializes the message
+into the <a href="https://arrow.apache.org/docs/format/Columnar.html#encapsulated-message-format">Encapsulated Message
+Format</a>.
+However, this function gives <em>incomplete output</em> with invalid metadata, because
+of an unsatisfied dependency on flatbuffers, which is required for serializing
+the metadata.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:key_value/0" data-no-tooltip="" translate="no">key_value()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Key-Value structure for custom metadata. See the
+<a>definition</a>
+for more info</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:message/0" data-no-tooltip="" translate="no">message()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Represents a Message.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:metadata_version/0" data-no-tooltip="" translate="no">metadata_version()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>The Arrow version. See the
+<a>definition</a>
+for more info</p></div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#body_from_erlang/1" data-no-tooltip="" translate="no">body_from_erlang(Columns)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the body of message from a list of arrays.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#from_erlang/1" data-no-tooltip="" translate="no">from_erlang(Header)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a message given a data header.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#from_erlang/2" data-no-tooltip="" translate="no">from_erlang(Header, Body)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a message given a data header and a body.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#metadata_len/1" data-no-tooltip="" translate="no">metadata_len(EMF)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Returns the Metadata Length of an EMF.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#to_ipc/1" data-no-tooltip="" translate="no">to_ipc(Message)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Serializes a message into the Encapsulated Message Format.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#to_stream/1" data-no-tooltip="" translate="no">to_stream(Messages)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Serializes a list of messages or EMFs into a Stream.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:key_value/0">
+
+  <div class="detail-header">
+    <a href="#t:key_value/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">key_value()</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_ipc_message.erl#L68" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> key_value() :: #{key => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(), value => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()}.</pre>
+
+      </div>
+
+<p>Key-Value structure for custom metadata. See the
+<a href="https://github.com/apache/arrow/blob/3456131ab7350bee5d9569ffd63d3f0ee713991c/format/Schema.fbs#L432-L439">definition</a>
+for more info:</p>
+  </section>
+</section>
+<section class="detail" id="t:message/0">
+
+  <div class="detail-header">
+    <a href="#t:message/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">message()</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_ipc_message.erl#L54" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> message() ::
+          #message{version :: <a href="arrow_ipc_message.html#t:metadata_version/0">arrow_ipc_message:metadata_version</a>(),
+                   header ::
+                       #schema{endianness :: <a href="arrow_ipc_schema.html#t:endianness/0">arrow_ipc_schema:endianness</a>(),
+                               fields :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>(),
+                               custom_metadata :: [<a href="arrow_ipc_message.html#t:key_value/0">arrow_ipc_message:key_value</a>()],
+                               features :: [<a href="arrow_ipc_schema.html#t:feature/0">arrow_ipc_schema:feature</a>()]} |
+                       #record_batch{length :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pos_integer/0">pos_integer</a>(),
+                                     nodes :: [<a href="arrow_ipc_record_batch.html#t:field_node/0">arrow_ipc_record_batch:field_node</a>()],
+                                     buffers :: [<a href="arrow_ipc_record_batch.html#t:buffer/0">arrow_ipc_record_batch:buffer</a>()],
+                                     compression :: undefined | lz4_frame | zstd},
+                   body_length :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:non_neg_integer/0">non_neg_integer</a>(),
+                   custom_metadata :: [<a href="arrow_ipc_message.html#t:key_value/0">arrow_ipc_message:key_value</a>()],
+                   body :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>() | undefined}.</pre>
+
+      </div>
+
+<p>Represents a Message.</p>
+  </section>
+</section>
+<section class="detail" id="t:metadata_version/0">
+
+  <div class="detail-header">
+    <a href="#t:metadata_version/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">metadata_version()</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_ipc_message.erl#L61" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> metadata_version() :: v1 | v2 | v3 | v4 | v5.</pre>
+
+      </div>
+
+<p>The Arrow version. See the
+<a href="https://github.com/apache/arrow/blob/3456131ab7350bee5d9569ffd63d3f0ee713991c/format/Schema.fbs#L28-L49">definition</a>
+for more info:</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="body_from_erlang/1">
+
+  <div class="detail-header">
+    <a href="#body_from_erlang/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">body_from_erlang(Columns)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_ipc_message.erl#L149" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> body_from_erlang(Columns :: [<a href="arrow_array.html#t:array/0">arrow_array:array</a>()]) -> Body :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Returns the body of message from a list of arrays.</p><p>Shorthand for:</p><pre><code class="makeup erlang" translate="no"><span class="p" data-group-id="1855103177-1">&lt;&lt;</span><span class="p" data-group-id="1855103177-2">&lt;&lt;</span><span class="p" data-group-id="1855103177-3">(</span><span class="nc">arrow_array</span><span class="p">:</span><span class="nf">to_arrow</span><span class="p" data-group-id="1855103177-4">(</span><span class="n">Array</span><span class="p" data-group-id="1855103177-4">)</span><span class="p" data-group-id="1855103177-3">)</span><span class="o">/</span><span class="ss">binary</span><span class="p" data-group-id="1855103177-2">&gt;&gt;</span><span class="w"> </span><span class="p">||</span><span class="w"> </span><span class="n">Array</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">Columns</span><span class="p" data-group-id="1855103177-1">&gt;&gt;</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="from_erlang/1">
+
+  <div class="detail-header">
+    <a href="#from_erlang/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">from_erlang(Header)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_ipc_message.erl#L75" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> from_erlang(Header :: <a href="arrow_ipc_schema.html#t:schema/0">arrow_ipc_schema:schema</a>() | <a href="arrow_ipc_record_batch.html#t:record_batch/0">arrow_ipc_record_batch:record_batch</a>()) ->
+                     Message :: <a href="#t:message/0">message</a>().</pre>
+
+      </div>
+
+<p>Creates a message given a data header.</p>
+  </section>
+</section>
+<section class="detail" id="from_erlang/2">
+
+  <div class="detail-header">
+    <a href="#from_erlang/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">from_erlang(Header, Body)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_ipc_message.erl#L84" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> from_erlang(Header :: <a href="arrow_ipc_schema.html#t:schema/0">arrow_ipc_schema:schema</a>() | <a href="arrow_ipc_record_batch.html#t:record_batch/0">arrow_ipc_record_batch:record_batch</a>(),
+                  Body :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()) ->
+                     Message :: <a href="#t:message/0">message</a>().</pre>
+
+      </div>
+
+<p>Creates a message given a data header and a body.</p>
+  </section>
+</section>
+<section class="detail" id="metadata_len/1">
+
+  <div class="detail-header">
+    <a href="#metadata_len/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">metadata_len(EMF)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_ipc_message.erl#L132" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> metadata_len(EMF :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()) -> MetadataLen :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:non_neg_integer/0">non_neg_integer</a>().</pre>
+
+      </div>
+
+<p>Returns the Metadata Length of an EMF.</p>
+  </section>
+</section>
+<section class="detail" id="to_ipc/1">
+
+  <div class="detail-header">
+    <a href="#to_ipc/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">to_ipc(Message)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_ipc_message.erl#L91" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> to_ipc(Message :: <a href="#t:message/0">message</a>()) -> EMF :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Serializes a message into the Encapsulated Message Format.</p>
+  </section>
+</section>
+<section class="detail" id="to_stream/1">
+
+  <div class="detail-header">
+    <a href="#to_stream/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">to_stream(Messages)</h1>
+
+
+        <a href="https://github.com/apache/arrow-erlang/blob/v0.1.0/src/arrow_ipc_message.erl#L111" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> to_stream(Messages :: [<a href="#t:message/0">message</a>()] | [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()]) -> Stream :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Serializes a list of messages or EMFs into a Stream.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/arrow/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/arrow/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="arrow.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.38.2) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>
