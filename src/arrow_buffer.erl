@@ -119,8 +119,8 @@ to_erlang(_Buffer) ->
 -doc "Returns the size of the buffer inclusive of padding in bytes.".
 -spec size(Buffer :: arrow_buffer:buffer()) -> pos_integer().
 size(Buffer) ->
-    Len = Buffer#buffer.length * 8,
-    round((Len + arrow_utils:pad_len(Len)) / 8).
+    Len = Buffer#buffer.length,
+    Len + arrow_utils:pad_len(Len).
 
 -spec slot(
     Value :: arrow_type:native_type(),

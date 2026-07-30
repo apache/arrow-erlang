@@ -157,7 +157,7 @@ to_erlang(_Config) ->
 
 size(_Config) ->
     Buffer = arrow_buffer:from_erlang([1, 2, 3], {s, 8}),
-    ?assertEqual(arrow_buffer:size(Buffer), 8).
+    ?assertEqual(arrow_buffer:size(Buffer), byte_size(arrow_buffer:to_arrow(Buffer))).
 
 %%%%%%%%%%%
 %% Utils %%
