@@ -44,7 +44,7 @@ comapatibility.
 You can find RecordBatches in the Arrow spec
 [here](https://arrow.apache.org/docs/format/Columnar.html#recordbatch-message).
 """.
--export([from_erlang/1]).
+-export([from_erlang/1, body_length/1]).
 -export_type([field_node/0, buffer/0, record_batch/0]).
 
 -include("arrow_ipc_record_batch.hrl").
@@ -55,7 +55,7 @@ You can find RecordBatches in the Arrow spec
 -type record_batch() :: #record_batch{}.
 
 -doc """
-Creates a RecordBatch given a list of arrays
+Creates a RecordBatch given a list of arrays.
 """.
 -spec from_erlang(Arrays :: [arrow_array:array()]) -> RecordBatch :: record_batch().
 from_erlang(Arrays) ->
@@ -114,3 +114,12 @@ buffer_data(Buffer, CurOffset) ->
         #{offset => CurOffset, length => Buffer#buffer.length},
         arrow_buffer:size(Buffer) + CurOffset
     }.
+
+-doc """
+Returns the body length of a Record Batch.
+""".
+-spec body_length(RecordBatch :: record_batch()) -> non_neg_integer().
+body_length(RecordBatch) ->
+    Buffers = RecordBatch#record_batch.buffers,
+    #{offset := Offset, length := Length} = lists:last(Buffers),
+    Offset + Length + (8 - (Length rem 8)).
