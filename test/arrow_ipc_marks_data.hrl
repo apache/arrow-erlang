@@ -61,9 +61,9 @@
 ).
 -define(Columns, [?ID, ?Name, ?Age, ?AnnualMarks]).
 -define(RecordBatch, arrow_ipc_record_batch:from_erlang(?Columns)).
--define(Body, <<<<(arrow_array:to_arrow(Array))/binary>> || Array <- ?Columns>>).
--define(RecordBatchMsg, arrow_ipc_message:from_erlang(?RecordBatch, ?Body)).
+-define(RecordBatchMsg, arrow_ipc_message:from_erlang(?RecordBatch, ?Columns)).
 -define(RecordBatchEMF, arrow_ipc_message:to_ipc(?RecordBatchMsg)).
+-define(Body, <<<<(arrow_array:to_arrow(Array))/binary>> || Array <- ?Columns>>).
 
 %%%%%%%%%%%%%%%%
 %% IPC Stream %%

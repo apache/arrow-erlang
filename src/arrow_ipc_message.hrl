@@ -27,5 +27,5 @@
 
     %% This field is unique to arrow.
     %% The rest are from the flatbuffers definitions.
-    body :: binary() | undefined
+    body :: [arrow_array:array()] | undefined
 }).
