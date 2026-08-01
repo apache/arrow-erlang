@@ -117,7 +117,7 @@ to_erlang(_Buffer) ->
     erlang:error(badarg).
 
 -doc "Returns the size of the buffer inclusive of padding in bytes.".
--spec size(Buffer :: arrow_buffer:buffer()) -> pos_integer().
+-spec size(Buffer :: arrow_buffer:buffer()) -> non_neg_integer().
 size(Buffer) ->
     Len = Buffer#buffer.length,
     Len + arrow_utils:pad_len(Len).
