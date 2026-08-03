@@ -120,6 +120,11 @@ Returns the body length of a Record Batch.
 """.
 -spec body_length(RecordBatch :: record_batch()) -> non_neg_integer().
 body_length(RecordBatch) ->
-    Buffers = RecordBatch#record_batch.buffers,
-    #{offset := Offset, length := Length} = lists:last(Buffers),
-    Offset + Length + (64 - (Length rem 64)).
+    case RecordBatch#record_batch.buffers of
+        [] ->
+            0;
+        Buffers ->
+            #{offset := Offset, length := Length} = lists:last(Buffers),
+            End = Offset + Length,
+            End + arrow_utils:pad_len(End)
+    end.
