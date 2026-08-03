@@ -83,7 +83,9 @@ Creates a message given a record batch data header and a body.
     Body :: [arrow_array:array()]
 ) -> Message :: message().
 from_erlang(Header, Body) ->
-    #message{header = Header, body = Body, body_length = arrow_ipc_record_batch:body_length(Header)}.
+    #message{
+        header = Header, body = Body, body_length = arrow_ipc_record_batch:body_length(Header)
+    }.
 
 -doc """
 Serializes a message into the Encapsulated Message Format.
