@@ -40,7 +40,8 @@ all() ->
         valid_data_on_access,
 
         %% serialization tests
-        valid_binary_on_to_arrow
+        valid_binary_on_to_arrow,
+        valid_size_on_size
     ].
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -99,6 +100,8 @@ valid_data_on_access(_Config) ->
 valid_binary_on_to_arrow(_Config) ->
     %% Primitive Fixed-Size Array
     %% Also offsets is not allocated on no offsets
+    Array0 = arrow_array:from_erlang(fixed_primitive, [], {s, 8}),
+    ?assertEqual(arrow_array:to_arrow(Array0), <<>>),
 
     Array1 = arrow_array:from_erlang(fixed_primitive, [1, 2, undefined, 3], {s, 8}),
     Validity1 = pad(<<0:1, 0:1, 0:1, 0:1, 1:1, 0:1, 1:1, 1:1>>),
@@ -144,6 +147,32 @@ valid_binary_on_to_arrow(_Config) ->
     Data4 = arrow_array:to_arrow(arrow_array:data(Array4)),
     Bin4 = <<Validity4/binary, Offsets4/binary, Data4/binary>>,
     ?assertEqual(arrow_array:to_arrow(Array4), Bin4).
+
+valid_size_on_size(_Config) ->
+    %% Primitive Fixed-Size Array
+    Array0 = arrow_array:from_erlang(fixed_primitive, [], {s, 8}),
+    ?assertEqual(arrow_array:size(Array0), 0),
+
+    Array1 = arrow_array:from_erlang(fixed_primitive, [1, 2, undefined, 3], {s, 8}),
+    ?assertEqual(arrow_array:size(Array1), byte_size(arrow_array:to_arrow(Array1))),
+
+    %% Variable-Size Binary
+    Array2 = arrow_array:from_erlang(
+        variable_binary, [<<1>>, <<2, 3>>, undefined, <<4, 5, 6>>], {s, 8}
+    ),
+    ?assertEqual(arrow_array:size(Array2), byte_size(arrow_array:to_arrow(Array2))),
+
+    %% Fixed-Sized List
+    Array3 = arrow_array:from_erlang(
+        fixed_list, [[1, 2, undefined, 3], [4, 5, 6, 7]], {s, 8}
+    ),
+    ?assertEqual(arrow_array:size(Array3), byte_size(arrow_array:to_arrow(Array3))),
+
+    %% Variable-Size List
+    Array4 = arrow_array:from_erlang(
+        variable_list, [[1, 2, undefined], [3, 4], undefined, [5]], {s, 8}
+    ),
+    ?assertEqual(arrow_array:size(Array4), byte_size(arrow_array:to_arrow(Array4))).
 
 %%%%%%%%%%%
 %% Utils %%
