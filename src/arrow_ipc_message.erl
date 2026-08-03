@@ -68,22 +68,22 @@ for more info:
 -type key_value() :: #{key => string(), value => string()}.
 
 -doc """
-Creates a message given a data header.
+Creates a message given a schema data header.
 """.
--spec from_erlang(Header :: arrow_ipc_schema:schema() | arrow_ipc_record_batch:record_batch()) ->
+-spec from_erlang(Header :: arrow_ipc_schema:schema()) ->
     Message :: message().
 from_erlang(Header) ->
     #message{header = Header, body_length = 0}.
 
 -doc """
-Creates a message given a data header and a body.
+Creates a message given a record batch data header and a body.
 """.
 -spec from_erlang(
-    Header :: arrow_ipc_schema:schema() | arrow_ipc_record_batch:record_batch(),
+    Header :: arrow_ipc_record_batch:record_batch(),
     Body :: [arrow_array:array()]
 ) -> Message :: message().
 from_erlang(Header, Body) ->
-    #message{header = Header, body = Body, body_length = undefined}.
+    #message{header = Header, body = Body, body_length = arrow_ipc_record_batch:body_length(Header)}.
 
 -doc """
 Serializes a message into the Encapsulated Message Format.

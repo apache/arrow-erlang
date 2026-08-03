@@ -65,5 +65,4 @@ valid_compression_on_from_erlang(_Config) ->
     ?assertEqual((?RecordBatch)#record_batch.compression, undefined).
 
 body_length(_Config) ->
-    erlang:display(?Body),
     ?assertEqual(arrow_ipc_record_batch:body_length(?RecordBatch), byte_size(?Body)).

@@ -122,4 +122,4 @@ Returns the body length of a Record Batch.
 body_length(RecordBatch) ->
     Buffers = RecordBatch#record_batch.buffers,
     #{offset := Offset, length := Length} = lists:last(Buffers),
-    Offset + Length + (8 - (Length rem 8)).
+    Offset + Length + (64 - (Length rem 64)).
