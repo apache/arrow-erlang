@@ -73,8 +73,7 @@ new arrays, and to serialize arrays to arrow exist.
     validity_bitmap/1,
     offsets/1,
     data/1,
-    to_arrow/1,
-    size/1
+    to_arrow/1
 ]).
 
 -include("arrow_array.hrl").
@@ -186,35 +185,16 @@ and not IPC.
 """.
 -spec to_arrow(Array :: array()) -> Arrow :: binary().
 to_arrow(Array) ->
-    Validity = some_to_arrow(validity_bitmap(Array)),
-    Offsets = some_to_arrow(offsets(Array)),
-    Data = some_to_arrow(data(Array)),
+    Validity = some(validity_bitmap(Array)),
+    Offsets = some(offsets(Array)),
+    Data = some(data(Array)),
 
     <<Validity/binary, Offsets/binary, Data/binary>>.
 
--spec some_to_arrow(Value :: array() | arrow_buffer:buffer() | undefined) -> Binary :: binary().
-some_to_arrow(undefined) ->
+-spec some(Value :: array() | arrow_buffer:buffer() | undefined) -> Binary :: binary().
+some(undefined) ->
     <<>>;
-some_to_arrow(Buffer) when is_record(Buffer, buffer) ->
+some(Buffer) when is_record(Buffer, buffer) ->
     arrow_buffer:to_arrow(Buffer);
-some_to_arrow(Array) when is_record(Array, array) ->
+some(Array) when is_record(Array, array) ->
     to_arrow(Array).
-
--doc """
-Returns the size of an array once serialized
-""".
--spec size(Array :: array()) -> Size :: non_neg_integer().
-size(Array) ->
-    Validity = some_size(validity_bitmap(Array)),
-    Offsets = some_size(offsets(Array)),
-    Data = some_size(data(Array)),
-
-    Validity + Offsets + Data.
-
--spec some_size(Value :: array() | arrow_buffer:buffer() | undefined) -> Size :: non_neg_integer().
-some_size(undefined) ->
-    0;
-some_size(Buffer) when is_record(Buffer, buffer) ->
-    arrow_buffer:size(Buffer);
-some_size(Array) when is_record(Array, array) ->
-    arrow_array:size(Array).
