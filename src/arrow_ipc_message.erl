@@ -33,7 +33,7 @@ to represent a message. Metadata such as:
 3.  `body_length`: The length of the body in bytes
 4.  `custom_metadata`: A list of custom metadata in key-value format
 5.  `body`: The actual body. Can be undefined (in the case of Schema)
-    or a `t:arrow_array:array/0` (in the case of Record Batch).
+    or a `[t:arrow_array:array/0]` (in the case of Record Batch).
 
 Currently, changing the version and custom metadata are not supported, but they
 have been added for forwards compatibility.
