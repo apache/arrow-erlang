@@ -43,14 +43,19 @@ valid_nodes_on_from_erlang(_Config) ->
     ?assertEqual((?RecordBatch)#record_batch.nodes, FieldNodes).
 
 valid_buffers_on_from_erlang(_Config) ->
-    ID = [#{offset => 0, length => 1}, #{offset => 8, length => 4}],
+    ID = [#{offset => 0, length => 1}, #{offset => 64, length => 4}],
     Name = [
-        #{offset => 16, length => 1}, #{offset => 24, length => 20}, #{offset => 48, length => 15}
+        #{offset => 128, length => 1},
+        #{offset => 192, length => 20},
+        #{offset => 256, length => 15}
     ],
-    Age = [#{offset => 64, length => 1}, #{offset => 72, length => 4}],
+    Age = [#{offset => 320, length => 1}, #{offset => 384, length => 4}],
     Marks =
-        [#{offset => 80, length => 1}] ++
-            [#{offset => 88, length => 2}, #{offset => 96, length => 10}],
+        [
+            #{offset => 448, length => 1},
+            #{offset => 512, length => 2},
+            #{offset => 576, length => 10}
+        ],
     Buffers = ID ++ Name ++ Age ++ Marks,
 
     ?assertEqual((?RecordBatch)#record_batch.buffers, Buffers).

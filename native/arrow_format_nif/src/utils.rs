@@ -120,39 +120,39 @@ pub fn record_batch() -> Message {
                     length: 1,
                 },
                 Buffer {
-                    offset: 8,
+                    offset: 64,
                     length: 4,
                 },
                 Buffer {
-                    offset: 16,
+                    offset: 128,
                     length: 1,
                 },
                 Buffer {
-                    offset: 24,
+                    offset: 192,
                     length: 20,
                 },
                 Buffer {
-                    offset: 48,
+                    offset: 256,
                     length: 15,
                 },
                 Buffer {
-                    offset: 64,
+                    offset: 320,
                     length: 1,
                 },
                 Buffer {
-                    offset: 72,
+                    offset: 384,
                     length: 4,
                 },
                 Buffer {
-                    offset: 80,
+                    offset: 448,
                     length: 1,
                 },
                 Buffer {
-                    offset: 88,
+                    offset: 512,
                     length: 2,
                 },
                 Buffer {
-                    offset: 96,
+                    offset: 576,
                     length: 10,
                 },
             ],

@@ -168,39 +168,39 @@ pub mod test {
                                 length: 1,
                             },
                             ipc::Buffer {
-                                offset: 8,
+                                offset: 64,
                                 length: 4,
                             },
                             ipc::Buffer {
-                                offset: 16,
+                                offset: 128,
                                 length: 1,
                             },
                             ipc::Buffer {
-                                offset: 24,
+                                offset: 192,
                                 length: 20,
                             },
                             ipc::Buffer {
-                                offset: 48,
+                                offset: 256,
                                 length: 15,
                             },
                             ipc::Buffer {
-                                offset: 64,
+                                offset: 320,
                                 length: 1,
                             },
                             ipc::Buffer {
-                                offset: 72,
+                                offset: 384,
                                 length: 4,
                             },
                             ipc::Buffer {
-                                offset: 80,
+                                offset: 448,
                                 length: 1,
                             },
                             ipc::Buffer {
-                                offset: 88,
+                                offset: 512,
                                 length: 2,
                             },
                             ipc::Buffer {
-                                offset: 96,
+                                offset: 576,
                                 length: 10,
                             },
                         ]),
