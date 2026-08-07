@@ -33,7 +33,7 @@ to represent a message. Metadata such as:
 3.  `body_length`: The length of the body in bytes
 4.  `custom_metadata`: A list of custom metadata in key-value format
 5.  `body`: The actual body. Can be undefined (in the case of Schema)
-    or a binary (in the case of Record Batch).
+    or a `[t:arrow_array:array/0]` (in the case of Record Batch).
 
 Currently, changing the version and custom metadata are not supported, but they
 have been added for forwards compatibility.
@@ -68,21 +68,24 @@ for more info:
 -type key_value() :: #{key => string(), value => string()}.
 
 -doc """
-Creates a message given a data header.
+Creates a message given a schema data header.
 """.
--spec from_erlang(Header :: arrow_ipc_schema:schema() | arrow_ipc_record_batch:record_batch()) ->
+-spec from_erlang(Header :: arrow_ipc_schema:schema()) ->
     Message :: message().
 from_erlang(Header) ->
     #message{header = Header, body_length = 0}.
 
 -doc """
-Creates a message given a data header and a body.
+Creates a message given a record batch data header and a body.
 """.
 -spec from_erlang(
-    Header :: arrow_ipc_schema:schema() | arrow_ipc_record_batch:record_batch(), Body :: binary()
+    Header :: arrow_ipc_record_batch:record_batch(),
+    Body :: [arrow_array:array()]
 ) -> Message :: message().
 from_erlang(Header, Body) ->
-    #message{header = Header, body = Body, body_length = byte_size(Body)}.
+    #message{
+        header = Header, body = Body, body_length = arrow_ipc_record_batch:body_length(Header)
+    }.
 
 -doc """
 Serializes a message into the Encapsulated Message Format.
@@ -98,8 +101,8 @@ to_ipc(Message) ->
         case Message#message.body of
             undefined ->
                 <<>>;
-            Bin ->
-                Bin
+            Arrays ->
+                body_from_erlang(Arrays)
         end,
 
     <<Continuation/binary, MetadataSize/binary, Metadata/binary, Body/binary>>.

@@ -68,7 +68,7 @@ valid_custom_metadata_on_from_erlang(_Config) ->
 
 valid_body_on_from_erlang(_Config) ->
     ?assertEqual((?SchemaMsg)#message.body, undefined),
-    ?assertEqual((?RecordBatchMsg)#message.body, ?Body).
+    ?assertEqual((?RecordBatchMsg)#message.body, ?Columns).
 
 %%%%%%%%%%%%%%
 %% to_ipc/1 %%

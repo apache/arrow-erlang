@@ -32,7 +32,8 @@ all() ->
         valid_length_on_from_erlang,
         valid_nodes_on_from_erlang,
         valid_buffers_on_from_erlang,
-        valid_compression_on_from_erlang
+        valid_compression_on_from_erlang,
+        body_length
     ].
 
 valid_length_on_from_erlang(_Config) ->
@@ -62,3 +63,6 @@ valid_buffers_on_from_erlang(_Config) ->
 
 valid_compression_on_from_erlang(_Config) ->
     ?assertEqual((?RecordBatch)#record_batch.compression, undefined).
+
+body_length(_Config) ->
+    ?assertEqual(arrow_ipc_record_batch:body_length(?RecordBatch), byte_size(?Body)).

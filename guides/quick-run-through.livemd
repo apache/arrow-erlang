@@ -1,5 +1,7 @@
 <!-- -*- mode: markdown; fill-column: 80; -*- -->
-<!---
+
+<!--
+-
   Licensed to the Apache Software Foundation (ASF) under one
   or more contributor license agreements.  See the NOTICE file
   distributed with this work for additional information
@@ -22,7 +24,7 @@
 
 ```elixir
 Mix.install([
-  {:arrow, git: "https://github.com/Benjamin-Philip/arrow.git"}
+  {:arrow, git: "https://github.com/apache/arrow-erlang.git"}
 ])
 ```
 
@@ -159,20 +161,12 @@ Class2RecordBatch = arrow_ipc_record_batch:from_erlang(Class2Columns),
 Class3RecordBatch = arrow_ipc_record_batch:from_erlang(Class3Columns).
 ```
 
-Each of these RecordBatches need a body:
+We can then create a Message from each Record Batch:
 
 ```erlang
-Class1Msg = arrow_ipc_message:body_from_erlang(Class1Columns),
-Class2Msg = arrow_ipc_message:body_from_erlang(Class2Columns),
-Class3Msg = arrow_ipc_message:body_from_erlang(Class3Columns).
-```
-
-Which can then be combined into a message:
-
-```erlang
-Class1Msg = arrow_ipc_message:from_erlang(Class1RecordBatch, Class1Body),
-Class2Msg = arrow_ipc_message:from_erlang(Class2RecordBatch, Class3Body),
-Class3Msg = arrow_ipc_message:from_erlang(Class3RecordBatch, Class3Body).
+Class1Msg = arrow_ipc_message:from_erlang(Class1RecordBatch, Class1Columns),
+Class2Msg = arrow_ipc_message:from_erlang(Class2RecordBatch, Class2Columns),
+Class3Msg = arrow_ipc_message:from_erlang(Class3RecordBatch, Class3Columns).
 ```
 
 If we wanted to, we could serialize these messages into an [Encapsulated message](https://arrow.apache.org/docs/format/Columnar.html#encapsulated-message-format):
