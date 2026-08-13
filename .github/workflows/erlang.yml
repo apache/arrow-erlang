@@ -70,7 +70,7 @@ jobs:
         run: cd ./native/arrow_format_nif/ && rustup toolchain install
 
       - name: Cache Rust packages
-        uses: swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        uses: swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           env-vars: "RUST_TOOLCHAIN_VERSION"
           workspaces: |
@@ -109,7 +109,7 @@ jobs:
         run: cd ./native/arrow_format_nif/ && rustup toolchain install
 
       - name: Cache Rust packages
-        uses: swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        uses: swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           env-vars: "RUST_TOOLCHAIN_VERSION"
           workspaces: |
