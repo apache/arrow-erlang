@@ -39,6 +39,7 @@ jobs:
         with:
           name: comment-${{ github.sha }}
           path: pr
+          github-token: ${{ github.token }}
       - name: Comment
         env:
           GH_TOKEN: ${{ github.token }}
