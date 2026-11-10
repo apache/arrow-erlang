@@ -42,9 +42,13 @@ jobs:
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: comment-${{ github.sha }}
-          path: pr
+          path: artifact
           github-token: ${{ github.token }}
           run-id: ${{ github.event.workflow_run.id || inputs.run_id }}
+      - name: Extract artifact
+        run: |
+          mkdir -p pr
+          tar -xf artifact/artifact.tar -C pr
       - name: Comment
         env:
           GH_TOKEN: ${{ github.token }}
