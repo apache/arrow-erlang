@@ -58,4 +58,5 @@ jobs:
 
           gh pr comment $number \
           --body-file ./pr/body.md \
-          --repo $repo
+          --repo $repo \
+          --create-if-none --edit-last
