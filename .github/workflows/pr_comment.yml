@@ -18,37 +18,34 @@
 name: PR comment
 
 on: # zizmor: ignore[dangerous-triggers]
-  pull_request_target:
+  workflow_run:
+    workflows: [Generate Preview Message on fork]
     types:
-      - opened
+      - completed
+  workflow_dispatch:
 
 permissions:
-  contents: read
+  actions: read
   issues: write
   pull-requests: write
 
 jobs:
   preview-url:
     name: Preview URL
-    if: github.event.pull_request.head.repo.full_name != 'apache/arrow-erlang'
     runs-on: ubuntu-latest
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: comment-${{ github.sha }}
+          path: pr
       - name: Comment
         env:
           GH_TOKEN: ${{ github.token }}
-          PR_REPOSITORY: ${{ github.event.pull_request.base.repo.full_name }}
-          FORK_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
-          PR_NUMBER: ${{ github.event.number }}
         run: |
-          configure_url="https://github.com/apache/arrow-erlang/blob/main/CONTRIBUTING.md#forks"
-          fork_owner=${FORK_REPOSITORY%/*}
-          fork_repository=${FORK_REPOSITORY#*/}
-          {
-            echo "Preview URL: https://${fork_owner}.github.io/${fork_repository}"
-            echo ""
-            echo "If the preview URL doesn't work, you may have forgotten to configure your fork repository for preview."
-            echo "See ${configure_url} for instructions on how to configure."
-          } | tee body.md
-          gh pr comment ${PR_NUMBER} \
-            --body-file body.md \
-            --repo ${PR_REPOSITORY}
+            number=$(cat ./pr/number)
+            repo=$(cat ./pr/repo)
+
+            gh pr comment $number \
+            --body-file ./pr/body.md \
+            --repo $repo
