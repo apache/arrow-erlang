@@ -43,9 +43,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-            number=$(cat ./pr/number)
-            repo=$(cat ./pr/repo)
+          number=$(cat ./pr/number)
+          repo=$(cat ./pr/repo)
 
-            gh pr comment $number \
-            --body-file ./pr/body.md \
-            --repo $repo
+          gh pr comment $number \
+          --body-file ./pr/body.md \
+          --repo $repo
