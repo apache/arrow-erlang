@@ -19,10 +19,14 @@ name: PR comment
 
 on: # zizmor: ignore[dangerous-triggers]
   workflow_run:
-    workflows: [Generate Preview Message on fork]
+    workflows: [Docs]
     types:
       - completed
   workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'workflow run-id of the Docs workflow which generated the message'
+        required: true
 
 permissions:
   actions: read
@@ -40,6 +44,7 @@ jobs:
           name: comment-${{ github.sha }}
           path: pr
           github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id || inputs.run_id }}
       - name: Comment
         env:
           GH_TOKEN: ${{ github.token }}
