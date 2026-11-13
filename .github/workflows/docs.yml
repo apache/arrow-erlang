@@ -97,10 +97,7 @@ jobs:
 
   generate_preview_message:
     name: Generate Preview Message on fork
-    if: >-
-      (github.event_name == 'pull_request' ||
-       github.event_name == 'workflow_dispatch') &&
-       github.repository != 'apache/arrow-erlang'
+    if: github.event_name != 'push'
     needs: build
 
     permissions:
