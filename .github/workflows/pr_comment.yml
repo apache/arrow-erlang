@@ -27,9 +27,6 @@ on: # zizmor: ignore[dangerous-triggers]
       run_id:
         description: 'workflow run-id of the Docs workflow which generated the message'
         required: true
-      repository:
-        description: 'repository in the context of which the Docs workflow ran'
-        required: true
 
 permissions:
   actions: read
@@ -48,7 +45,6 @@ jobs:
           path: artifact
           github-token: ${{ github.token }}
           run-id: ${{ github.event.workflow_run.id || inputs.run_id }}
-          repository: ${{ github.event.workflow_run.head_repository.full_name || inputs.repository }}
       - name: Extract artifact
         run: |
           mkdir -p pr
